@@ -32,7 +32,7 @@ public class VRPlayerController : MonoBehaviour {
         }
         else if (move)
         {
-            playerSpeed = 2;
+            playerSpeed = 8;
         }
         //felfele nezesnel abbamaradjon és akkor is ha egy bizonyos szognel lejjebb nez
         if((move && vrCamera.eulerAngles.x < 350 && vrCamera.eulerAngles.x > 180) || 

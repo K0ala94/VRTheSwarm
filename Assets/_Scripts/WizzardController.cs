@@ -7,15 +7,16 @@ public class WizzardController : MonoBehaviour {
     private GameObject player;
     public  GameObject dialogePrefab;
     public Transform dialogeSpawnPoint;
-    public GameObject kittenSpawnerCenter;
     private GameObject dialoge;
     private GameObject home;
+    private GameManager gameManager;
     private bool questAccepted = false;
     private bool dialogeActive = false;
 
 	void Start () {
         player = GameObject.Find("Player");
         home = GameObject.Find("OgreDoor");
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 	
 	
@@ -54,6 +55,6 @@ public class WizzardController : MonoBehaviour {
         questAccepted = true;
         dialogeActive = false;
         player.GetComponent<VRPlayerController>().CanMove = true;
-        kittenSpawnerCenter.GetComponent<KittenSpawner>().spawnKittens();
+        gameManager.spawnKittens();
     }
 }

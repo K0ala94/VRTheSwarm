@@ -6,19 +6,18 @@ using UnityEngine.UI;
 
 public class RuneController : MonoBehaviour {
 
-    public static bool practiceMode = true;
     private bool drawing = false;
     public GameObject sparklPrefab;
     private GameObject sparkl;
     private GameObject player;
     private Collider[] checkPoints;
-    private RuneManager runeManager;
+    private GameManager gameManager;
     private int faults;
     public int checkPointCount = 0;
     public GameObject resulDialogePrefab;
     public string resultDialogeText;
     public bool dragging = false;
-
+    
 
     public void pointerExit()
     {
@@ -77,7 +76,7 @@ public class RuneController : MonoBehaviour {
 
     public void evaluateRunePerformance()
     {
-        if (practiceMode)
+        if (gameManager.PracticeMode)
         {
             if (faults > 2 || checkPointCount < checkPoints.Length)
             {
@@ -90,7 +89,7 @@ public class RuneController : MonoBehaviour {
             {
                 Debug.Log("Success: " + faults + "--" + checkPointCount);
                 GetComponent<ResultDialogeController>().displayRsult("Congratulations you learnt a new spell");
-                runeManager.spawnRune(runeManager.currentRune++);
+                gameManager.spawnRune(gameManager.currentRune++);
                 Destroy(gameObject, 3f);
             }
         }
@@ -100,7 +99,7 @@ public class RuneController : MonoBehaviour {
     void Start () {
         player = GameObject.Find("Player");
         checkPoints = GetComponents<Collider>();
-        runeManager = GameObject.Find("RuneManager").GetComponent<RuneManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 	
 	

@@ -8,13 +8,25 @@ public class CatOwnerController : MonoBehaviour {
     private GameObject player;
     public GameObject tigerPrefab;
     public GameObject smokePrefab;
-    private RuneManager runeManager;
+    private GameManager gameManager;
+    public GameObject dialogePrefab;
+    private GameObject activeDialoge;
+    public Transform dialogeSpawnPoint;
     private bool dialogeActive = false;
-    private bool dialogeDone = false;
+    private bool firstDialogeDone = false;
+    private int dialogeStateCounter = 0;
+    private string[] firstEncounterText;
+    private string[] secondEncounterText;
 
-	void Start () {
+    void Start () {
         player = GameObject.Find("Player");
-        runeManager = GameObject.Find("RuneManager").GetComponent<RuneManager>();  
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();  
+        firstEncounterText = new string[]{ "My Kittens... ! \n They are terrified in there. \n Why are you chasing them? ",
+                              "This must be that cruel Ogre's doing again...",
+                              "You need to help me deafet him! \n But first...",
+                              "Acient Runes can be found in these forests. \n Find them and learn their secrets!",
+                              "I marked the Runes for you.. \n Hurry up my kittens are in danger"};
+        secondEncounterText = new string[] {"I see you learnt all the spells.", "Well done !" };
     }
 	
 	
@@ -25,12 +37,47 @@ public class CatOwnerController : MonoBehaviour {
         {
             if ((Input.GetKeyDown(KeyCode.Space) || GvrController.ClickButtonDown || GvrController.TouchDown))
             {
-                dialogeActive = false;
-                dialogeDone = true;
-                createSmoke();
-                runeManager.spawnRune(runeManager.currentRune++);
+                if (!firstDialogeDone)
+                {
+                    continoueFirstDialoge();
+                }
+                else
+                {
+                    continoueSecondDialoge();
+                }
                
             }
+        }
+    }
+
+    private void continoueFirstDialoge()
+    {
+        if (dialogeStateCounter < firstEncounterText.Length)
+        {
+            activeDialoge.GetComponent<DialogeController>().setDialogeText(firstEncounterText[dialogeStateCounter++]);
+        }
+        else
+        {
+            dialogeActive = false;
+            firstDialogeDone = true;
+            dialogeStateCounter = 0;
+            player.GetComponent<VRPlayerController>().CanMove = true;
+            DestroyImmediate(activeDialoge);
+            gameManager.spawnRune(gameManager.currentRune++);
+        }
+    }
+
+    private void continoueSecondDialoge()
+    {
+        if (dialogeStateCounter < secondEncounterText.Length)
+        {
+            activeDialoge.GetComponent<DialogeController>().setDialogeText(secondEncounterText[dialogeStateCounter++]);
+        }
+        else
+        {
+            dialogeActive = false;
+            DestroyImmediate(activeDialoge);
+            createSmoke();
         }
     }
 
@@ -38,12 +85,25 @@ public class CatOwnerController : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (!dialogeDone)
+            if (!firstDialogeDone)
             {
-                dialogeActive = true;
-                player.GetComponent<VRPlayerController>().CanMove = false;
+                startDialoge();
+                continoueFirstDialoge();
+            }
+            else if (gameManager.PracticeRunesDone)
+            {
+                startDialoge();
+                continoueSecondDialoge();
             }
         }
+    }
+
+    private void startDialoge()
+    {
+        dialogeActive = true;
+        player.GetComponent<VRPlayerController>().CanMove = false;
+        player.GetComponent<VRPlayerController>().move = false;
+        activeDialoge = Instantiate(dialogePrefab, dialogeSpawnPoint.position, Quaternion.identity);
     }
 
     private void setPlayerCanMove()

@@ -15,4 +15,5 @@ public class ResultDialogeController : MonoBehaviour {
         resultDialogeText.GetComponent<Text>().text = text;
         Destroy(resultDialoge, 4f);
     }
+
 }
