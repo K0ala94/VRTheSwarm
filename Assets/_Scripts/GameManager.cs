@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour {
         else
         {
             PracticeRunesDone = true;
-            Instantiate(markerPrefab, GameObject.Find("DialogeSpawn").transform.position, Quaternion.identity);
+            Instantiate(markerPrefab, GameObject.Find("DialogeSpawn").transform.position, Quaternion.EulerAngles(-90,0,0));
         }
     }
 

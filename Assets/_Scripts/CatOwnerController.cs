@@ -37,7 +37,7 @@ public class CatOwnerController : MonoBehaviour {
         transform.LookAt(player.transform);
         if (dialogeActive)
         {
-            if ((Input.GetKeyDown(KeyCode.Space) || GvrController.ClickButtonDown || GvrController.TouchDown))
+            if ((Input.GetKeyDown(KeyCode.Space) || GvrController.ClickButtonDown))
             {
                 if (!firstDialogeDone)
                 {

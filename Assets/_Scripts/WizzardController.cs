@@ -43,7 +43,7 @@ public class WizzardController : MonoBehaviour {
         }
 
         if(dialogeActive && (Input.GetKeyDown(KeyCode.Space) || GvrController.ClickButtonDown)){
-            if (!questAccepted)
+            if (!gameManager.PlayerReturnedToOgre)
                 continoueFirstDialoge();
             else
                 continoueSecondDialoge();
