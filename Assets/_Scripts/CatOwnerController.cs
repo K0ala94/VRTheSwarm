@@ -26,7 +26,9 @@ public class CatOwnerController : MonoBehaviour {
                               "You need to help me deafet him! \n But first...",
                               "Acient Runes can be found in these forests. \n Find them and learn their secrets!",
                               "I marked the Runes for you.. \n Hurry up my kittens are in danger"};
-        secondEncounterText = new string[] {"I see you learnt all the spells.", "Well done !" };
+        secondEncounterText = new string[] { "I see you learnt all the spells.", "Well done !",
+                                             "Let's go find that Ogre, \n but first...",
+                                             "Let my most loyal companion aid you in your battles"};
     }
 	
 	
@@ -78,6 +80,7 @@ public class CatOwnerController : MonoBehaviour {
             dialogeActive = false;
             DestroyImmediate(activeDialoge);
             createSmoke();
+            gameManager.reSpawnOgre();
         }
     }
 
