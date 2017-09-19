@@ -40,7 +40,7 @@ public class RuneController : MonoBehaviour {
 
         if (sparkl == null)
         {
-            sparkl = Instantiate(sparklPrefab, pointerPos, Quaternion.EulerAngles(0, 0, 0));
+            sparkl = Instantiate(sparklPrefab, pointerPos, Quaternion.Euler(0, 0, 0));
         }
     }
 
@@ -51,7 +51,7 @@ public class RuneController : MonoBehaviour {
 
         if (sparkl == null)
         {
-            sparkl = Instantiate(sparklPrefab, pointerPos, Quaternion.EulerAngles(0,0,0));
+            sparkl = Instantiate(sparklPrefab, pointerPos, Quaternion.Euler(0,0,0));
         }
 
         sparkl.transform.position = pointerPos;
