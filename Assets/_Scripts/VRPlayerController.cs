@@ -9,6 +9,7 @@ public class VRPlayerController : MonoBehaviour {
     private float playerSpeed;
     public bool move = false;
     private CharacterController cController;
+    public GameObject fireBallPrefab;
 
     public bool CanMove { private get; set; }
 
@@ -43,9 +44,17 @@ public class VRPlayerController : MonoBehaviour {
 
         if (move && CanMove)
         {
-            transform.position += new Vector3( vrCamera.forward.x,0, vrCamera.forward.z) * playerSpeed* Time.deltaTime;
+            transform.position += new Vector3(vrCamera.forward.x, 0, vrCamera.forward.z) * playerSpeed * Time.deltaTime;
            // Vector3 forward = vrCamera.TransformDirection(Vector3.forward);
            // cController.SimpleMove(forward * playerSpeed);
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GameObject controller = GameObject.Find("GvrControllerPointer");
+            Vector3 pos = controller.transform.position + controller.transform.forward*1;
+
+            GameObject fireBall = Instantiate(fireBallPrefab, pos, Quaternion.identity);
+            
         }
 	}
 

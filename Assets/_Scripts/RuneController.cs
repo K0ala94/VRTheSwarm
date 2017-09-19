@@ -10,12 +10,13 @@ public class RuneController : MonoBehaviour {
     public GameObject sparklPrefab;
     private GameObject sparkl;
     private GameObject player;
+    public GameObject fireBallPrefab;
     private Collider[] checkPoints;
     private GameManager gameManager;
     private int faults;
     public int checkPointCount = 0;
     public GameObject resulDialogePrefab;
-    public string resultDialogeText;
+    private string resultDialogeText;
     public bool dragging = false;
     
 
@@ -76,22 +77,40 @@ public class RuneController : MonoBehaviour {
 
     public void evaluateRunePerformance()
     {
-        if (gameManager.PracticeMode)
+        if (faults > 2 || checkPointCount < checkPoints.Length)
         {
-            if (faults > 2 || checkPointCount < checkPoints.Length)
-            {
-                Debug.Log("Failed: " + faults + "--" + checkPointCount);
-                GetComponent<ResultDialogeController>().displayRsult("Failed: You had " + faults + " faults" +
-                                       " and " + (checkPoints.Length - checkPointCount) + " missed checkpoints");
-                Invoke("resetRune", 3f);
-            }
-            else
-            {
-                Debug.Log("Success: " + faults + "--" + checkPointCount);
-                GetComponent<ResultDialogeController>().displayRsult("Congratulations you learnt a new spell");
-                gameManager.spawnRune(gameManager.currentRune++);
-                Destroy(gameObject, 3f);
-            }
+            onRuneFail();
+        }
+        else
+        {
+            onRuneSuccess();
+        }
+    }
+
+    private void onRuneFail()
+    {
+        Debug.Log("Failed: " + faults + "--" + checkPointCount);
+        GetComponent<ResultDialogeController>().displayRsult("Failed: You had " + faults + " faults" +
+                    " and " + (checkPoints.Length - checkPointCount) + " missed checkpoints");
+        Invoke("resetRune", 3f);
+    }
+
+    private void onRuneSuccess()
+    {
+        if (gameManager.LearnRunesDone)
+        {
+            GameObject controller = GameObject.Find("GvrControllerPointer");
+            Vector3 pos = controller.transform.position + controller.transform.forward * 1;
+            Instantiate(fireBallPrefab, pos, Quaternion.identity);
+            Destroy(gameObject, 0.1f);
+            gameManager.spawnRune();
+        }
+        else
+        {
+            Debug.Log("Success: " + faults + "--" + checkPointCount);
+            GetComponent<ResultDialogeController>().displayRsult("Congratulations you learnt a new spell");
+            gameManager.spawnRune();
+            Destroy(gameObject, 3f);
         }
     }
     

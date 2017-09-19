@@ -12,29 +12,57 @@ public class GameManager : MonoBehaviour {
     public GameObject ogrePrefab;
     public Transform ogreSpawnPoint;
     public GameObject markerPrefab;
+    public Transform runePracticeSpawnPoint;
 
+    public bool LearnMode { get; set; }
     public bool PracticeMode { get; set; }
     public bool PracticeRunesDone { get; set; }
+    public bool LearnRunesDone { get; set; }
     public bool PlayerReturnedToOgre { get; set; }
 
     private void Start()
     {
+        LearnMode = true;
+        PracticeMode = false;
         PracticeRunesDone = false;
-        PracticeMode = true;
+        LearnRunesDone = true;
+        LearnMode = true;
         PlayerReturnedToOgre = false;
     }
 
 
-    public void spawnRune(int runeIndex)
+    public void spawnRune()
     {
-        if (runeIndex < runePrefabs.Length && runeIndex < spawnPoints.Length)
+        if (!LearnRunesDone)
         {
-            Instantiate(runePrefabs[runeIndex], spawnPoints[runeIndex].position, Quaternion.identity);
+            if (currentRune < runePrefabs.Length && currentRune < spawnPoints.Length)
+            {
+                Instantiate(runePrefabs[currentRune], spawnPoints[currentRune].position, Quaternion.identity);
+                currentRune++;
+            }
+            else
+            {
+                currentRune = 0;
+                LearnRunesDone = true;
+                Instantiate(markerPrefab, GameObject.Find("DialogeSpawn").transform.position, Quaternion.Euler(-90, 0, 0));
+            }
+        }
+        else if (!PracticeRunesDone)
+        {
+            if (currentRune < runePrefabs.Length)
+            {
+                Instantiate(runePrefabs[currentRune], runePracticeSpawnPoint.position, Quaternion.identity);
+                currentRune++;
+            }
+            else
+            {
+                PracticeRunesDone = true;
+                reSpawnOgre();
+            }
         }
         else
         {
-            PracticeRunesDone = true;
-            Instantiate(markerPrefab, GameObject.Find("DialogeSpawn").transform.position, Quaternion.Euler(-90,0,0));
+
         }
     }
 

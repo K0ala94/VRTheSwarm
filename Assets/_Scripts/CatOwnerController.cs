@@ -13,10 +13,13 @@ public class CatOwnerController : MonoBehaviour {
     private GameObject activeDialoge;
     public Transform dialogeSpawnPoint;
     private bool dialogeActive = false;
-    private bool firstDialogeDone = false;
+    private bool firstDialogeDone = true;
+    private bool secondDialogeDone = false;
+    private bool thirdDialogeDone = false;
     private int dialogeStateCounter = 0;
     private string[] firstEncounterText;
     private string[] secondEncounterText;
+    private string[] thirdEncounterText;
 
     void Start () {
         player = GameObject.Find("Player");
@@ -26,7 +29,10 @@ public class CatOwnerController : MonoBehaviour {
                               "You need to help me deafet him! \n But first...",
                               "Acient Runes can be found in these forests. \n Find them and learn their secrets!",
                               "I marked the Runes for you.. \n Hurry up my kittens are in danger"};
-        secondEncounterText = new string[] { "I see you learnt all the spells.", "Well done !",
+        secondEncounterText = new string[] { "I see you found all the Runes \n Well done !",
+                                            "You can cast a spell by drawing a rune and swinging your wand forward",
+                                            "Now go practice it!!"};
+        thirdEncounterText = new string[] { "Great job ! \n You have mastered all the spells",
                                              "Let's go find that Ogre, \n but first...",
                                              "Let my most loyal companion aid you in your battles"};
     }
@@ -60,12 +66,9 @@ public class CatOwnerController : MonoBehaviour {
         }
         else
         {
-            dialogeActive = false;
+            finishDialoge();
             firstDialogeDone = true;
-            dialogeStateCounter = 0;
-            player.GetComponent<VRPlayerController>().CanMove = true;
-            DestroyImmediate(activeDialoge);
-            gameManager.spawnRune(gameManager.currentRune++);
+            gameManager.spawnRune();
         }
     }
 
@@ -77,26 +80,53 @@ public class CatOwnerController : MonoBehaviour {
         }
         else
         {
-            dialogeActive = false;
-            DestroyImmediate(activeDialoge);
-            createSmoke();
-            gameManager.reSpawnOgre();
+            finishDialoge();
+            secondDialogeDone = true;
+            gameManager.PracticeMode = true;
+            gameManager.spawnRune();
         }
+    }
+
+    private void continoueThirdDialoge()
+    {
+        if (dialogeStateCounter < thirdEncounterText.Length)
+        {
+            activeDialoge.GetComponent<DialogeController>().setDialogeText(thirdEncounterText[dialogeStateCounter++]);
+        }
+        else
+        {
+            finishDialoge();
+            thirdDialogeDone = true;
+            createSmoke();
+        }
+    }
+
+    private void finishDialoge()
+    {
+        dialogeActive = false;
+        dialogeStateCounter = 0;
+        DestroyImmediate(activeDialoge);
+        player.GetComponent<VRPlayerController>().CanMove = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("PlayerInteract"))
         {
             if (!firstDialogeDone)
             {
                 startDialoge();
                 continoueFirstDialoge();
             }
-            else if (gameManager.PracticeRunesDone)
+            else if (gameManager.LearnRunesDone && !secondDialogeDone)
             {
                 startDialoge();
                 continoueSecondDialoge();
+            }
+            else if (gameManager.PracticeRunesDone)
+            {
+                startDialoge();
+                continoueThirdDialoge();
             }
         }
     }
