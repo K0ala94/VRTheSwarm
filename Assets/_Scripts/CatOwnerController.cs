@@ -13,7 +13,7 @@ public class CatOwnerController : MonoBehaviour {
     private GameObject activeDialoge;
     public Transform dialogeSpawnPoint;
     private bool dialogeActive = false;
-    private bool firstDialogeDone = true;
+    private bool firstDialogeDone = false;
     private bool secondDialogeDone = false;
     private bool thirdDialogeDone = false;
     private int dialogeStateCounter = 0;
@@ -82,7 +82,6 @@ public class CatOwnerController : MonoBehaviour {
         {
             finishDialoge();
             secondDialogeDone = true;
-            gameManager.PracticeMode = true;
             gameManager.spawnRune();
         }
     }
@@ -97,6 +96,7 @@ public class CatOwnerController : MonoBehaviour {
         {
             finishDialoge();
             thirdDialogeDone = true;
+            gameManager.reSpawnOgre();
             createSmoke();
         }
     }

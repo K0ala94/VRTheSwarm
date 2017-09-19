@@ -14,19 +14,14 @@ public class GameManager : MonoBehaviour {
     public GameObject markerPrefab;
     public Transform runePracticeSpawnPoint;
 
-    public bool LearnMode { get; set; }
-    public bool PracticeMode { get; set; }
     public bool PracticeRunesDone { get; set; }
     public bool LearnRunesDone { get; set; }
     public bool PlayerReturnedToOgre { get; set; }
 
     private void Start()
     {
-        LearnMode = true;
-        PracticeMode = false;
         PracticeRunesDone = false;
-        LearnRunesDone = true;
-        LearnMode = true;
+        LearnRunesDone = false;
         PlayerReturnedToOgre = false;
     }
 
@@ -51,13 +46,14 @@ public class GameManager : MonoBehaviour {
         {
             if (currentRune < runePrefabs.Length)
             {
-                Instantiate(runePrefabs[currentRune], runePracticeSpawnPoint.position, Quaternion.identity);
+                Vector3 runePos = runePracticeSpawnPoint.position + (Random.insideUnitSphere * 6);
+                runePos.y = 1.5f;
+                Instantiate(runePrefabs[currentRune], runePos, Quaternion.identity);
                 currentRune++;
             }
             else
             {
                 PracticeRunesDone = true;
-                reSpawnOgre();
             }
         }
         else

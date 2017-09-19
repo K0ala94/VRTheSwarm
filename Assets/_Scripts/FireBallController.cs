@@ -6,8 +6,10 @@ public class FireBallController : MonoBehaviour {
 
     private GameObject DDController;
     public bool shooting = false;
+    private float swingStartTime;
+    private bool swinging = false;
 
-	void Start () {
+    void Start () {
         DDController = GameObject.Find("GvrControllerPointer");
 	}
 	
@@ -19,10 +21,25 @@ public class FireBallController : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (!shooting && GvrControllerInput.Gyro.y > 3.14f)
+       //controller szogsebessege radianban
+        if (!shooting && GvrControllerInput.Gyro.x > 3.14f)
         {
-            shoot();
+            if (!swinging)
+            {
+                swingStartTime = Time.time;
+                swinging = true;
+            }
+            else if (Time.time - swingStartTime > 0.15f)
+            {
+                shoot();
+            }
         }
+        else
+        {
+            swinging = false;
+        }
+
+
     }
 
     public void shoot()
@@ -31,7 +48,7 @@ public class FireBallController : MonoBehaviour {
         Transform camera = GameObject.Find("VrCamera").transform;
         Quaternion origRot = camera.rotation;
         camera.Rotate(new Vector3(-20f, 0, 0));
-        GetComponent<Rigidbody>().velocity = camera.forward * 15;
+        GetComponent<Rigidbody>().velocity = camera.forward * GvrControllerInput.Gyro.x* 2;
         camera.rotation = origRot;
         Destroy(gameObject, 3);
     }

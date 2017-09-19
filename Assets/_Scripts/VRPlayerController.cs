@@ -48,21 +48,20 @@ public class VRPlayerController : MonoBehaviour {
            // Vector3 forward = vrCamera.TransformDirection(Vector3.forward);
            // cController.SimpleMove(forward * playerSpeed);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || GvrControllerInput.AppButtonDown)
         {
             GameObject controller = GameObject.Find("GvrControllerPointer");
-            Vector3 pos = controller.transform.position + controller.transform.forward*1;
+            Vector3 pos = controller.transform.position + controller.transform.forward * 1;
 
-            GameObject fireBall = Instantiate(fireBallPrefab, pos, Quaternion.identity);
-            
+            GameObject fireBall = Instantiate(fireBallPrefab, pos, Quaternion.identity);   
         }
 	}
 
     private void FixedUpdate()
     {
-        if (GvrController.TouchDown)
+        if (GvrControllerInput.AppButtonDown)
         {
-           // GetComponent<Rigidbody>().AddForce(transform.up * 200f);
+           //GetComponent<Rigidbody>().AddForce(transform.up * 200f);
         }
     }
 }
