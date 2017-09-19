@@ -49,9 +49,13 @@ public class CatOwnerController : MonoBehaviour {
                 {
                     continoueFirstDialoge();
                 }
-                else
+                else if(!secondDialogeDone)
                 {
                     continoueSecondDialoge();
+                }
+                else
+                {
+                    continoueThirdDialoge();
                 }
                
             }

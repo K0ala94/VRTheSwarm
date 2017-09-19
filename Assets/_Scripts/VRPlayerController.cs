@@ -21,32 +21,34 @@ public class VRPlayerController : MonoBehaviour {
 	
 	void Update () {
         // mikor kezdodjon a mozgas
-        
-        if (vrCamera.eulerAngles.x > 20 &&  vrCamera.eulerAngles.x <50)
-        { 
-            move = true;
-            playerSpeed = 2;
-        }
-        if(move  && (vrCamera.eulerAngles.x > 15 && vrCamera.eulerAngles.x < 350 ))
+        if (GvrControllerInput.IsTouching)
         {
-            playerSpeed = 3.2f;
-        }
-        else if (move)
-        {
-            playerSpeed = 2;
-        }
-        //felfele nezesnel abbamaradjon és akkor is ha egy bizonyos szognel lejjebb nez
-        if((move && vrCamera.eulerAngles.x < 350 && vrCamera.eulerAngles.x > 180) || 
-           (move && vrCamera.eulerAngles.x > 50  && vrCamera.eulerAngles.x < 90))
-        {
-            move = false;
-        }
+            if (vrCamera.eulerAngles.x > 20 && vrCamera.eulerAngles.x < 50)
+            {
+                move = true;
+                playerSpeed = 2;
+            }
+            if (move && (vrCamera.eulerAngles.x > 15 && vrCamera.eulerAngles.x < 350))
+            {
+                playerSpeed = 3.2f;
+            }
+            else if (move)
+            {
+                playerSpeed = 2;
+            }
+            //felfele nezesnel abbamaradjon és akkor is ha egy bizonyos szognel lejjebb nez
+            if ((move && vrCamera.eulerAngles.x < 350 && vrCamera.eulerAngles.x > 180) ||
+               (move && vrCamera.eulerAngles.x > 50 && vrCamera.eulerAngles.x < 90))
+            {
+                move = false;
+            }
 
-        if (move && CanMove)
-        {
-            transform.position += new Vector3(vrCamera.forward.x, 0, vrCamera.forward.z) * playerSpeed * Time.deltaTime;
-           // Vector3 forward = vrCamera.TransformDirection(Vector3.forward);
-           // cController.SimpleMove(forward * playerSpeed);
+            if (move && CanMove)
+            {
+                transform.position += new Vector3(vrCamera.forward.x, 0, vrCamera.forward.z) * playerSpeed * Time.deltaTime;
+                // Vector3 forward = vrCamera.TransformDirection(Vector3.forward);
+                // cController.SimpleMove(forward * playerSpeed);
+            }
         }
         if (Input.GetKeyDown(KeyCode.Space) || GvrControllerInput.AppButtonDown)
         {
