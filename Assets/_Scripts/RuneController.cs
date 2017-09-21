@@ -15,7 +15,6 @@ public class RuneController : MonoBehaviour {
     private GameManager gameManager;
     private int faults;
     public int checkPointCount = 0;
-    public GameObject resulDialogePrefab;
     private string resultDialogeText;
     public bool dragging = false;
     
