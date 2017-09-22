@@ -25,10 +25,10 @@ public class CatOwnerController : MonoBehaviour {
         player = GameObject.Find("Player");
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();  
         firstEncounterText = new string[]{ "My Kittens... ! \n They are terrified in there. \n Why are you chasing them? ",
-                              "This must be that cruel Ogre's doing again...",
-                              "You need to help me deafet him! \n But first...",
-                              "Acient Runes can be found in these forests. \n Find them and learn their secrets!",
-                              "I marked the Runes for you.. \n Hurry up my kittens are in danger"};
+                              "This must be that cruel Ogre's doing again... \n HE EATS KITTENS !!",
+                              "You need to help me defeat him! \n But you need to prepare for the fight first!",
+                              "Acient Runes can be found in these forests. \n Find all four of them and learn their secrets!",
+                              "I marked the Runes for you.. \n Just look up in the sky if you are lost. \n Hurry up my kittens are in danger"};
         secondEncounterText = new string[] { "I see you found all the Runes \n Well done !",
                                             "You can cast a spell by drawing a rune and swinging your wand forward",
                                             "Now go practice it!!"};

@@ -54,7 +54,7 @@ public class VRPlayerController : MonoBehaviour {
         {
             move = false;
         }
-        if (Input.GetKeyDown(KeyCode.Space) || GvrControllerInput.AppButtonDown)
+        if (GvrControllerInput.AppButtonDown)
         {
             GameObject controller = GameObject.Find("GvrControllerPointer");
             Vector3 pos = controller.transform.position + controller.transform.forward * 1;

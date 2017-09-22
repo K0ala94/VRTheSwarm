@@ -17,7 +17,7 @@ public class RuneController : MonoBehaviour {
     public int checkPointCount = 0;
     private string resultDialogeText;
     public bool dragging = false;
-    
+
 
     public void pointerExit()
     {
@@ -51,7 +51,7 @@ public class RuneController : MonoBehaviour {
 
         if (sparkl == null)
         {
-            sparkl = Instantiate(sparklPrefab, pointerPos, Quaternion.Euler(0,0,0));
+            sparkl = Instantiate(sparklPrefab, pointerPos, Quaternion.Euler(0, 0, 0));
         }
 
         sparkl.transform.position = pointerPos;
@@ -88,10 +88,17 @@ public class RuneController : MonoBehaviour {
 
     private void onRuneFail()
     {
-        Debug.Log("Failed: " + faults + "--" + checkPointCount);
-        GetComponent<ResultDialogeController>().displayRsult("Failed: You had " + faults + " faults" +
-                    " and " + (checkPoints.Length - checkPointCount) + " missed checkpoints");
-        Invoke("resetRune", 3f);
+        if (!gameManager.PracticeRunesDone)
+        {
+            Debug.Log("Failed: " + faults + "--" + checkPointCount);
+            GetComponent<ResultDialogeController>().displayRsult("Failed: You had " + faults + " faults" +
+                        " and " + (checkPoints.Length - checkPointCount) + " missed checkpoints");
+            Invoke("resetRune", 3f);
+        }
+        else
+        {
+            onRuneSuccess();
+        }
     }
 
     private void onRuneSuccess()
@@ -100,9 +107,17 @@ public class RuneController : MonoBehaviour {
         {
             GameObject controller = GameObject.Find("GvrControllerPointer");
             Vector3 pos = controller.transform.position + controller.transform.forward * 1;
-            Instantiate(fireBallPrefab, pos, Quaternion.identity);
+            GameObject ball = Instantiate(fireBallPrefab, pos, Quaternion.identity);
+            //Damage a hibák függvéynében
+            ball.GetComponent<FireBallController>().damage = 10 - (checkPoints.Length - checkPointCount) * 2 - faults;
+            //Miert ragad ott a szikra????????
+            Invoke("destroyS", 1f);
+            Destroy(sparkl, 0.1f);
             Destroy(gameObject, 0.1f);
-            gameManager.spawnRune();
+
+
+            if (gameManager.OgreAlive)
+                gameManager.spawnRune();
         }
         else
         {
@@ -112,7 +127,11 @@ public class RuneController : MonoBehaviour {
             Destroy(gameObject, 3f);
         }
     }
-    
+
+
+    public void destroyS (){
+        Destroy(GameObject.Find("Sparkl(Clone)"), 0.1f);
+    }
 
     void Start () {
         player = GameObject.Find("Player");
@@ -122,10 +141,22 @@ public class RuneController : MonoBehaviour {
 	
 	
 	void Update () {
+        
         Vector3 startRot = transform.rotation.eulerAngles;
+
+        if (gameManager.Phase2)
+        {
+            transform.RotateAround(gameManager.runeOgreSpawnPoint.position, new Vector3(0, 0, 1), 0.6f);
+            //Masodik fazisban mozgo runak
+        }
+
         transform.LookAt(player.transform);
         Vector3 rot = transform.rotation.eulerAngles;
         transform.rotation= Quaternion.Euler(new Vector3(startRot.x, rot.y, startRot.z));
+
+
+
+       
     }
 
 

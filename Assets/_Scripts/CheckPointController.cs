@@ -16,10 +16,10 @@ public class CheckPointController : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("RuneEnd"))
         {
+            Destroy(gameObject, 0.5f);
             RuneController runeController = other.GetComponentInParent<RuneController>();
             runeController.evaluateRunePerformance();
             other.enabled = false;
-            Destroy(gameObject, 0.1f);
         }
         else if(other.tag != "PLayer")
         {

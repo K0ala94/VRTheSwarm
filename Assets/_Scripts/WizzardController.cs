@@ -15,13 +15,14 @@ public class WizzardController : MonoBehaviour {
     private string[] firstEncounterText;
     private string[] secondEncounterText;
     private int dialogeStateCounter = 0;
+    public float health = 100;
 
     void Start () {
         player = GameObject.Find("Player");
         home = GameObject.Find("OgreDoor");
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         firstEncounterText = new string[] {"Greetings Wonderer! \n What a pleasent surprise, this can't be a coincidance... ",
-                             "I would be extremely greatful if you could help me out, \n and generous to say the least",
+                             "I would be extremely grateful if you could help me out, \n and generous to say the least",
                              "My delicious ugrhmmmmm... \n My dear kittens ran away from me \n They dwell in these forests now",
                              "Could you catch at least one of them for me please? \n My caldron is ughh.. My life is empty without them",
                              "Now go find them!"};
@@ -47,6 +48,26 @@ public class WizzardController : MonoBehaviour {
                 continoueFirstDialoge();
             else
                 continoueSecondDialoge();
+        }
+
+        if (gameManager.Phase1)
+        {
+            //Do attacks here
+            if (health < 50)
+            {
+                gameManager.Phase1 = false;
+                gameManager.Phase2 = true;
+            }
+            //Debug.Log("1 Phase 1");
+        }
+        else if (gameManager.Phase2)
+        {
+            //Debug.Log(" 2 Phase 2");
+            player.GetComponent<VRPlayerController>().CanMove = true;
+        }
+        else if(!gameManager.OgreAlive)
+        {
+            StartCoroutine(die());
         }
 
 	}
@@ -97,8 +118,15 @@ public class WizzardController : MonoBehaviour {
             dialogeActive = false;
             DestroyImmediate(activeDialoge);
             StartCoroutine(enrage());
+            gameManager.Phase1 = true;
+            Invoke("startSpawningRunes", 4.0f);
         }
 
+    }
+
+    private void startSpawningRunes()
+    {
+        gameManager.spawnRune();
     }
 
     private void startDialoge()
@@ -126,5 +154,14 @@ public class WizzardController : MonoBehaviour {
             yield return null;
         }
        
+    }
+
+    private IEnumerator die()
+    {
+        for (int i = 1; i < 90; i++)
+        {
+            transform.Rotate(new Vector3(-1, 0, 0));
+            yield return null;
+        }
     }
 }

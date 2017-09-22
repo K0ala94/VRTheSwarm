@@ -13,21 +13,30 @@ public class GameManager : MonoBehaviour {
     public Transform ogreSpawnPoint;
     public GameObject markerPrefab;
     public Transform runePracticeSpawnPoint;
+    public Transform runeOgreSpawnPoint;
 
     public bool PracticeRunesDone { get; set; }
     public bool LearnRunesDone { get; set; }
     public bool PlayerReturnedToOgre { get; set; }
+    public bool OgreAlive { get; set; }
+    public bool Phase1 { get; set; }
+    public bool Phase2 { get; set; }
 
     private void Start()
     {
-        PracticeRunesDone = false;
-        LearnRunesDone = false;
-        PlayerReturnedToOgre = false;
+        PracticeRunesDone = true;
+        LearnRunesDone = true;
+        PlayerReturnedToOgre = true;
+        OgreAlive = true;
+        Phase1 = false;
+        Phase2 = false;
     }
 
 
     public void spawnRune()
     {
+        Destroy(GameObject.Find("Sparkl(Clone)"), 0.1f);
+        
         if (!LearnRunesDone)
         {
             if (currentRune < runePrefabs.Length && currentRune < spawnPoints.Length)
@@ -58,7 +67,9 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
-
+            Vector3 runePos = runeOgreSpawnPoint.position + (Random.insideUnitSphere * 1.5f);
+            int runeIndex = Random.Range(0, 4);
+            Instantiate(runePrefabs[runeIndex], runePos, Quaternion.identity);
         }
     }
 
