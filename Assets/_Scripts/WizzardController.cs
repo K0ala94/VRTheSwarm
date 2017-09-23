@@ -74,19 +74,22 @@ public class WizzardController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("PlayerInteract") && !questAccepted)
+        if (gameManager.OgreAlive && ( !gameManager.Phase1 && !gameManager.Phase2))
         {
-            startDialoge();
-            continoueFirstDialoge();
-        }
-        else if(other.gameObject.CompareTag("Player") && gameManager.PlayerReturnedToOgre)
-        {
-            startDialoge();
-            continoueSecondDialoge();
-        }
-        else if (other.tag.Equals("WizzardsHome") && !gameManager.PlayerReturnedToOgre)
-        {
-            Destroy(gameObject, 0.1f);
+            if (other.gameObject.CompareTag("PlayerInteract") && !questAccepted)
+            {
+                startDialoge();
+                continoueFirstDialoge();
+            }
+            else if (other.gameObject.CompareTag("Player") && gameManager.PlayerReturnedToOgre)
+            {
+                startDialoge();
+                continoueSecondDialoge();
+            }
+            else if (other.tag.Equals("WizzardsHome") && !gameManager.PlayerReturnedToOgre)
+            {
+                Destroy(gameObject, 0.1f);
+            }
         }
     }
 
@@ -120,6 +123,7 @@ public class WizzardController : MonoBehaviour {
             StartCoroutine(enrage());
             gameManager.Phase1 = true;
             Invoke("startSpawningRunes", 4.0f);
+            player.GetComponent<VRPlayerController>().fightStandPos = player.transform.position; 
         }
 
     }

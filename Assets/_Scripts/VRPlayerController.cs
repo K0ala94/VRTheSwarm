@@ -10,12 +10,18 @@ public class VRPlayerController : MonoBehaviour {
     public bool move = false;
     private CharacterController cController;
     public GameObject fireBallPrefab;
+    private GameManager gameManager;
+    private Vector2 initialTouchPos = new Vector2(0, 0);
+    private bool canMoveLeftInFight = true;
+    private bool canMoveRightInFight = true;
+    public Vector3 fightStandPos;
 
     public bool CanMove { private get; set; }
 
     void Start () {
         cController = GetComponent<CharacterController>();
         CanMove = true;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 	
 	
@@ -50,10 +56,41 @@ public class VRPlayerController : MonoBehaviour {
                 // cController.SimpleMove(forward * playerSpeed);
             }
         }
+
+        //Harc kozbeni dashelgetes
+        if (GvrControllerInput.TouchDown)
+        {
+            initialTouchPos = GvrControllerInput.TouchPos;
+        }
         if (GvrControllerInput.TouchUp)
         {
             move = false;
+            float deltaPos = initialTouchPos.x - GvrControllerInput.TouchPos.x;
+            if(deltaPos > 0.3)
+            {
+                if (canMoveLeftInFight)
+                {
+                    fightStandPos = transform.position - transform.right * 2;
+                    canMoveLeftInFight = false;
+                    canMoveRightInFight = true;
+                }
+            }
+            else if ( deltaPos < -0.3)
+            {
+                if (canMoveRightInFight)
+                {
+                    fightStandPos = transform.position + transform.right * 2;
+                    canMoveLeftInFight = true;
+                    canMoveRightInFight = false;
+                }
+            }
         }
+
+        if (gameManager.Phase1 || gameManager.Phase2)
+        {
+            transform.position = Vector3.Lerp(transform.position, fightStandPos, 0.15f);
+        }
+
         if (GvrControllerInput.AppButtonDown)
         {
             GameObject controller = GameObject.Find("GvrControllerPointer");

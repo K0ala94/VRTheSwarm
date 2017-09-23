@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FireBallController : MonoBehaviour {
 
     private GameObject DDController;
     private GameManager gameManager;
+    public GameObject damageDisplayPrefab;
     public bool shooting = false;
     public float damage = 0;
     private float swingStartTime;
@@ -62,6 +64,11 @@ public class FireBallController : MonoBehaviour {
         if (other.gameObject.CompareTag("Wizzard"))
         {
             other.GetComponent<WizzardController>().health -= damage;
+
+            Instantiate(damageDisplayPrefab, transform.position, Quaternion.identity);
+            Text dmgText = GameObject.Find("DamageText").GetComponent<Text>();
+            dmgText.text ="-"+ damage;
+
             Debug.Log(other.GetComponent<WizzardController>().health);
             if(other.GetComponent<WizzardController>().health <= 0)
             {

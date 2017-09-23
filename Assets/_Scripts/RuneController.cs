@@ -41,6 +41,7 @@ public class RuneController : MonoBehaviour {
         if (sparkl == null)
         {
             sparkl = Instantiate(sparklPrefab, pointerPos, Quaternion.Euler(0, 0, 0));
+            sparkl.transform.SetParent(transform);
         }
     }
 
@@ -52,6 +53,7 @@ public class RuneController : MonoBehaviour {
         if (sparkl == null)
         {
             sparkl = Instantiate(sparklPrefab, pointerPos, Quaternion.Euler(0, 0, 0));
+            sparkl.transform.SetParent(transform);
         }
 
         sparkl.transform.position = pointerPos;
@@ -109,12 +111,10 @@ public class RuneController : MonoBehaviour {
             Vector3 pos = controller.transform.position + controller.transform.forward * 1;
             GameObject ball = Instantiate(fireBallPrefab, pos, Quaternion.identity);
             //Damage a hibák függvéynében
-            ball.GetComponent<FireBallController>().damage = 10 - (checkPoints.Length - checkPointCount) * 2 - faults;
-            //Miert ragad ott a szikra????????
-            Invoke("destroyS", 1f);
-            Destroy(sparkl, 0.1f);
+            float runeScore = 10 - (checkPoints.Length - checkPointCount) * 2 - faults;
+            ball.GetComponent<FireBallController>().damage = runeScore >= 0 ? runeScore : 0;
+            
             Destroy(gameObject, 0.1f);
-
 
             if (gameManager.OgreAlive)
                 gameManager.spawnRune();
@@ -126,11 +126,6 @@ public class RuneController : MonoBehaviour {
             gameManager.spawnRune();
             Destroy(gameObject, 3f);
         }
-    }
-
-
-    public void destroyS (){
-        Destroy(GameObject.Find("Sparkl(Clone)"), 0.1f);
     }
 
     void Start () {

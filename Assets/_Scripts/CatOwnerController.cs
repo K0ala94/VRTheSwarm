@@ -20,10 +20,12 @@ public class CatOwnerController : MonoBehaviour {
     private string[] firstEncounterText;
     private string[] secondEncounterText;
     private string[] thirdEncounterText;
+    private Animator catOwnerAnimator;
 
     void Start () {
         player = GameObject.Find("Player");
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();  
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        catOwnerAnimator = GetComponent<Animator>();
         firstEncounterText = new string[]{ "My Kittens... ! \n They are terrified in there. \n Why are you chasing them? ",
                               "This must be that cruel Ogre's doing again... \n HE EATS KITTENS !!",
                               "You need to help me defeat him! \n But you need to prepare for the fight first!",
@@ -40,7 +42,17 @@ public class CatOwnerController : MonoBehaviour {
 	
 	void Update () {
         transform.position = Vector3.MoveTowards(transform.position, standPoint.position, Time.deltaTime*1);
+        //Csak az y tengely korul forogjon
+        Vector3 startRot = transform.rotation.eulerAngles;
         transform.LookAt(player.transform);
+        Vector3 rot = transform.rotation.eulerAngles;
+        transform.rotation = Quaternion.Euler(new Vector3(startRot.x, rot.y, startRot.z));
+
+        if(transform.position.x == standPoint.position.x && transform.position.y == standPoint.position.y)
+        {
+            catOwnerAnimator.SetBool("Arrived", true);
+        }
+
         if (dialogeActive)
         {
             if ((Input.GetKeyDown(KeyCode.Space) || GvrController.ClickButtonDown))
@@ -127,7 +139,7 @@ public class CatOwnerController : MonoBehaviour {
                 startDialoge();
                 continoueSecondDialoge();
             }
-            else if (gameManager.PracticeRunesDone)
+            else if (gameManager.PracticeRunesDone && !thirdDialogeDone)
             {
                 startDialoge();
                 continoueThirdDialoge();
