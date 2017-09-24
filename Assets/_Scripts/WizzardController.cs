@@ -33,42 +33,46 @@ public class WizzardController : MonoBehaviour {
 	
 	
 	void Update () {
-        if (!questAccepted || gameManager.PlayerReturnedToOgre)
+        if (gameManager.OgreAlive)
         {
-            Vector3 startRot = transform.rotation.eulerAngles;
-            transform.LookAt(player.transform);
-            Vector3 rot = transform.rotation.eulerAngles;
-            transform.rotation = Quaternion.Euler(new Vector3(startRot.x, rot.y, startRot.z));
+            if (!questAccepted || gameManager.PlayerReturnedToOgre)
+            {
+                Vector3 startRot = transform.rotation.eulerAngles;
+                transform.LookAt(player.transform);
+                Vector3 rot = transform.rotation.eulerAngles;
+                transform.rotation = Quaternion.Euler(new Vector3(startRot.x, rot.y, startRot.z));
+            }
+            else
+            {
+                transform.LookAt(home.transform);
+                transform.position += transform.forward * Time.deltaTime * 0.9f;
+            }
+
+            if (dialogeActive && (Input.GetKeyDown(KeyCode.Space) || GvrController.ClickButtonDown))
+            {
+                if (!gameManager.PlayerReturnedToOgre)
+                    continoueFirstDialoge();
+                else
+                    continoueSecondDialoge();
+            }
+
+            if (gameManager.Phase1)
+            {
+                //Do attacks here
+                if (health < 50)
+                {
+                    gameManager.Phase1 = false;
+                    gameManager.Phase2 = true;
+                }
+                //Debug.Log("1 Phase 1");
+            }
+            else if (gameManager.Phase2)
+            {
+                //Debug.Log(" 2 Phase 2");
+                player.GetComponent<VRPlayerController>().CanMove = true;
+            }
         }
         else
-        {
-            transform.LookAt(home.transform);
-            transform.position += transform.forward * Time.deltaTime * 0.9f;
-        }
-
-        if(dialogeActive && (Input.GetKeyDown(KeyCode.Space) || GvrController.ClickButtonDown)){
-            if (!gameManager.PlayerReturnedToOgre)
-                continoueFirstDialoge();
-            else
-                continoueSecondDialoge();
-        }
-
-        if (gameManager.Phase1)
-        {
-            //Do attacks here
-            if (health < 50)
-            {
-                gameManager.Phase1 = false;
-                gameManager.Phase2 = true;
-            }
-            //Debug.Log("1 Phase 1");
-        }
-        else if (gameManager.Phase2)
-        {
-            //Debug.Log(" 2 Phase 2");
-            player.GetComponent<VRPlayerController>().CanMove = true;
-        }
-        else if(!gameManager.OgreAlive)
         {
             StartCoroutine(die());
         }
