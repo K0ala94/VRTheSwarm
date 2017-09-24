@@ -35,7 +35,10 @@ public class WizzardController : MonoBehaviour {
 	void Update () {
         if (!questAccepted || gameManager.PlayerReturnedToOgre)
         {
+            Vector3 startRot = transform.rotation.eulerAngles;
             transform.LookAt(player.transform);
+            Vector3 rot = transform.rotation.eulerAngles;
+            transform.rotation = Quaternion.Euler(new Vector3(startRot.x, rot.y, startRot.z));
         }
         else
         {
@@ -123,7 +126,7 @@ public class WizzardController : MonoBehaviour {
             StartCoroutine(enrage());
             gameManager.Phase1 = true;
             Invoke("startSpawningRunes", 4.0f);
-            player.GetComponent<VRPlayerController>().fightStandPos = player.transform.position; 
+            player.GetComponent<VRPlayerDash>().fightStandPos = player.transform.position; 
         }
 
     }

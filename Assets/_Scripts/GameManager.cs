@@ -69,7 +69,10 @@ public class GameManager : MonoBehaviour {
         {
             Vector3 runePos = runeOgreSpawnPoint.position + (Random.insideUnitSphere * 1.5f);
             int runeIndex = Random.Range(0, 4);
-            Instantiate(runePrefabs[runeIndex], runePos, Quaternion.identity);
+            GameObject rune = Instantiate(runePrefabs[runeIndex], runePos, Quaternion.identity);
+            //ne legyen marker folotte lathato
+            ParticleSystem.EmissionModule emit = rune.GetComponentInChildren<ParticleSystem>().emission;
+            emit.enabled = false;
         }
     }
 
