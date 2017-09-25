@@ -5,6 +5,7 @@ using UnityEngine;
 public class VRPlayerDash : MonoBehaviour {
 
     public Vector3 fightStandPos;
+    public Vector3 initialFightPos;
     private GameManager gameManager;
     private Vector2 initialTouchPos = new Vector2(0, 0);
     private bool canMoveLeftInFight = true;
@@ -31,17 +32,27 @@ public class VRPlayerDash : MonoBehaviour {
             float deltaPos = initialTouchPos.x - GvrControllerInput.TouchPos.x;
             if (deltaPos > 0.3)
             {
-                if (dashPos == DashPos.Mid || dashPos == DashPos.Right)
+                if (dashPos == DashPos.Mid)
                 {
                     fightStandPos = transform.position - vrCamera.transform.right * 3;
+                    dashPos--;
+                }
+                else if(dashPos == DashPos.Right)
+                {
+                    fightStandPos = initialFightPos;
                     dashPos--;
                 }
             }
             else if (deltaPos < -0.3)
             {
-                if (dashPos == DashPos.Mid || dashPos == DashPos.Left)
+                if (dashPos == DashPos.Mid)
                 {
                     fightStandPos = transform.position + vrCamera.transform.right * 3;
+                    dashPos++;
+                }
+                else if(dashPos == DashPos.Left)
+                {
+                    fightStandPos = initialFightPos;
                     dashPos++;
                 }
             }
@@ -49,7 +60,7 @@ public class VRPlayerDash : MonoBehaviour {
 
         if (gameManager.Phase1 || gameManager.Phase2)
         {
-           // transform.position = Vector3.Lerp(transform.position, fightStandPos, 0.15f);
+           transform.position = Vector3.Lerp(transform.position, fightStandPos, 0.15f);
         }
     }
 }

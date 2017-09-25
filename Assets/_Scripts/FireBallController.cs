@@ -53,7 +53,7 @@ public class FireBallController : MonoBehaviour {
         shooting = true;
         Transform camera = GameObject.Find("VrCamera").transform;
         Quaternion origRot = camera.rotation;
-        camera.Rotate(new Vector3(-15f, 0, 0));
+        camera.Rotate(new Vector3(-10f, 0, 0));
         GetComponent<Rigidbody>().velocity = camera.forward * GvrControllerInput.Gyro.x* 2;
         camera.rotation = origRot;
         Destroy(gameObject, 4);
@@ -75,6 +75,7 @@ public class FireBallController : MonoBehaviour {
                 gameManager.Phase2 = false;
                 gameManager.OgreAlive = false;
                 GameObject.Find("Player").GetComponent<VRPlayerController>().CanMove = true;
+                StartCoroutine(GameObject.Find("Ogre").GetComponent<WizzardController>().die());
             }
         }
         

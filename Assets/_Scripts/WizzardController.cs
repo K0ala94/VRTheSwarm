@@ -75,7 +75,7 @@ public class WizzardController : MonoBehaviour {
         }
         else
         {
-            StartCoroutine(die());
+            //StartCoroutine(die());
         }
 
 	}
@@ -132,6 +132,7 @@ public class WizzardController : MonoBehaviour {
             gameManager.Phase1 = true;
             Invoke("startSpawningRunes", 4.0f);
             player.GetComponent<VRPlayerDash>().fightStandPos = player.transform.position;
+            player.GetComponent<VRPlayerDash>().initialFightPos = player.transform.position;
             GetComponent<BarrelSpawner>().startBarrelThrowing();
         }
 
@@ -141,6 +142,7 @@ public class WizzardController : MonoBehaviour {
     {
         gameManager.spawnRune();
     }
+
 
     private void startDialoge()
     {
@@ -169,7 +171,7 @@ public class WizzardController : MonoBehaviour {
        
     }
 
-    private IEnumerator die()
+    public IEnumerator die()
     {
         for (int i = 1; i < 90; i++)
         {
