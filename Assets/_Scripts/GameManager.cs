@@ -24,9 +24,9 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        PracticeRunesDone = false;
-        LearnRunesDone = false;
-        PlayerReturnedToOgre = false;
+        PracticeRunesDone = true;
+        LearnRunesDone = true;
+        PlayerReturnedToOgre = true;
         OgreAlive = true;
         Phase1 = false;
         Phase2 = false;

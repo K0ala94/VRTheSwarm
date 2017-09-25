@@ -10,6 +10,9 @@ public class VRPlayerDash : MonoBehaviour {
     private bool canMoveLeftInFight = true;
     private bool canMoveRightInFight = true;
     private GameObject vrCamera;
+    private DashPos dashPos = DashPos.Mid;
+
+    private enum DashPos { Left,Mid,Right};
 
     void Start () {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -28,27 +31,25 @@ public class VRPlayerDash : MonoBehaviour {
             float deltaPos = initialTouchPos.x - GvrControllerInput.TouchPos.x;
             if (deltaPos > 0.3)
             {
-                if (canMoveLeftInFight)
+                if (dashPos == DashPos.Mid || dashPos == DashPos.Right)
                 {
                     fightStandPos = transform.position - vrCamera.transform.right * 3;
-                    canMoveLeftInFight = false;
-                    canMoveRightInFight = true;
+                    dashPos--;
                 }
             }
             else if (deltaPos < -0.3)
             {
-                if (canMoveRightInFight)
+                if (dashPos == DashPos.Mid || dashPos == DashPos.Left)
                 {
                     fightStandPos = transform.position + vrCamera.transform.right * 3;
-                    canMoveLeftInFight = true;
-                    canMoveRightInFight = false;
+                    dashPos++;
                 }
             }
         }
 
         if (gameManager.Phase1 || gameManager.Phase2)
         {
-            transform.position = Vector3.Lerp(transform.position, fightStandPos, 0.15f);
+           // transform.position = Vector3.Lerp(transform.position, fightStandPos, 0.15f);
         }
     }
 }

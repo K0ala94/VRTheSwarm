@@ -71,6 +71,7 @@ public class WizzardController : MonoBehaviour {
                 //Debug.Log(" 2 Phase 2");
                 player.GetComponent<VRPlayerController>().CanMove = true;
             }
+
         }
         else
         {
@@ -130,7 +131,8 @@ public class WizzardController : MonoBehaviour {
             StartCoroutine(enrage());
             gameManager.Phase1 = true;
             Invoke("startSpawningRunes", 4.0f);
-            player.GetComponent<VRPlayerDash>().fightStandPos = player.transform.position; 
+            player.GetComponent<VRPlayerDash>().fightStandPos = player.transform.position;
+            GetComponent<BarrelSpawner>().startBarrelThrowing();
         }
 
     }
