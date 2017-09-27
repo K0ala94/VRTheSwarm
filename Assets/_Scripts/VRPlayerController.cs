@@ -62,10 +62,8 @@ public class VRPlayerController : MonoBehaviour {
 
         if (GvrControllerInput.AppButtonDown)
         {
-            GameObject controller = GameObject.Find("GvrControllerPointer");
-            Vector3 pos = controller.transform.position + controller.transform.forward * 1;
 
-            GameObject fireBall = Instantiate(fireBallPrefab, pos, Quaternion.identity);   
+            
         }
 	}
 

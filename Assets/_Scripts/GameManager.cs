@@ -12,8 +12,10 @@ public class GameManager : MonoBehaviour {
     public GameObject ogrePrefab;
     public Transform ogreSpawnPoint;
     public GameObject markerPrefab;
+    public GameObject playerPrefab;
     public Transform runePracticeSpawnPoint;
     public Transform runeOgreSpawnPoint;
+    public Transform respawnPoint;
 
     public bool PracticeRunesDone { get; set; }
     public bool LearnRunesDone { get; set; }
@@ -24,9 +26,9 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        PracticeRunesDone = true;
-        LearnRunesDone = true;
-        PlayerReturnedToOgre = true;
+        PracticeRunesDone = false;
+        LearnRunesDone = false;
+        PlayerReturnedToOgre = false;
         OgreAlive = true;
         Phase1 = false;
         Phase2 = false;
@@ -83,8 +85,24 @@ public class GameManager : MonoBehaviour {
 
     public void reSpawnOgre()
     {
-        Instantiate(ogrePrefab, ogreSpawnPoint.position, Quaternion.identity);
+        Instantiate(ogrePrefab, ogreSpawnPoint.position, Quaternion.identity).name = "Ogre";
         PlayerReturnedToOgre = true;
+    }
+
+    public void respawnPlayer()
+    {
+        Phase1 = false;
+        Phase2 = false;
+        Invoke("resetGameStateToBeforeFight", 4.0f);
+    }
+
+    private void resetGameStateToBeforeFight()
+    {
+        DestroyImmediate(GameObject.Find("Ogre"));
+        DestroyImmediate(GameObject.FindGameObjectWithTag("Rune"));
+        reSpawnOgre();
+        DestroyImmediate(GameObject.Find("Player"));
+        Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity).name = "Player";
     }
 
 }

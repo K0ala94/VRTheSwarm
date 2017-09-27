@@ -32,11 +32,11 @@ public class CatOwnerController : MonoBehaviour {
                               "Acient Runes can be found in these forests. \n Find all four of them and learn their secrets!",
                               "I marked the Runes for you.. \n Just look up in the sky if you are lost. \n Hurry up my kittens are in danger"};
         secondEncounterText = new string[] { "I see you found all the Runes \n Well done !",
-                                            "You can cast a spell by drawing a rune and swinging your wand forward",
-                                            "Now go practice it!!"};
+                                            "You can cast a spell by drawing a rune and swinging your wand forward when the elemnets of nature appear",
+                                            "Now go practice it!! \n Come back to me when you are done!"};
         thirdEncounterText = new string[] { "Great job ! \n You have mastered all the spells",
-                                             "Let's go find that Ogre, \n but first...",
-                                             "Let my most loyal companion aid you in your battles"};
+                                             "Let's go find that Ogre! \n Remember, you can dodge his attacks by swiping on the touchpad left and right",
+                                             "In addition, \nLet my most loyal companion aid you in your battles"};
     }
 	
 	

@@ -3,8 +3,6 @@ using System.Collections;
 
 public class MathUtil
 {
-    private static float lastChangedDir = Time.time;
-    private static Vector2 previousTangentPick;
 
     public static float pointLineDistance(Vector2 linePoint1, Vector2 linePoint2, Vector2 externalPoint)
     {

@@ -33,6 +33,11 @@ public class WizzardController : MonoBehaviour {
 	
 	
 	void Update () {
+        if(player == null)
+        {
+            player = GameObject.Find("Player");
+        }
+
         if (gameManager.OgreAlive)
         {
             if (!questAccepted || gameManager.PlayerReturnedToOgre)
@@ -69,12 +74,13 @@ public class WizzardController : MonoBehaviour {
             else if (gameManager.Phase2)
             {
                 //Debug.Log(" 2 Phase 2");
-                player.GetComponent<VRPlayerController>().CanMove = true;
+                
             }
 
         }
         else
         {
+            
             //StartCoroutine(die());
         }
 
@@ -82,6 +88,11 @@ public class WizzardController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        if(player == null)
+        {
+            player = GameObject.Find("Player");
+        }
+
         if (gameManager.OgreAlive && ( !gameManager.Phase1 && !gameManager.Phase2))
         {
             if (other.gameObject.CompareTag("PlayerInteract") && !questAccepted)
@@ -127,6 +138,7 @@ public class WizzardController : MonoBehaviour {
         else
         {
             dialogeActive = false;
+            dialogeStateCounter = 0;
             DestroyImmediate(activeDialoge);
             StartCoroutine(enrage());
             gameManager.Phase1 = true;

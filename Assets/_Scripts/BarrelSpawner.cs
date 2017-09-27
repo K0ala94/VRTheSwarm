@@ -17,7 +17,7 @@ public class BarrelSpawner : MonoBehaviour {
 
     void Update () {
 
-        if (Input.GetKeyDown(KeyCode.B))
+        if (GvrControllerInput.AppButtonDown)
         {
             Instantiate(barrelPrefab, barrelSpawn.position, Quaternion.identity);
         }
@@ -31,7 +31,7 @@ public class BarrelSpawner : MonoBehaviour {
     private IEnumerator spawnBarrels()
     {
         yield return new WaitForSeconds(5.0f);
-        while (gameManager.OgreAlive &&( gameManager.Phase1 || gameManager.Phase2))
+        while (gameManager.OgreAlive && ( gameManager.Phase1 || gameManager.Phase2))
         {
             GameObject barrel = Instantiate(barrelPrefab, barrelSpawn.position, Quaternion.identity);
             Destroy(barrel, 4.0f);

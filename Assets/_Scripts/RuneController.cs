@@ -136,7 +136,12 @@ public class RuneController : MonoBehaviour {
 	
 	
 	void Update () {
-        
+
+        if (player == null)
+        {
+            player = GameObject.Find("Player");
+        }
+
         Vector3 startRot = transform.rotation.eulerAngles;
 
         if (gameManager.Phase2)
