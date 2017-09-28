@@ -16,6 +16,7 @@ public class MoveRocks : MonoBehaviour {
     private bool fleeing = false;
     private Animator kittenAnim;
     private GameObject obstacle;
+    private bool canMove = true;
 
     void Start () {
         player = GameObject.Find("Player");
@@ -52,6 +53,7 @@ public class MoveRocks : MonoBehaviour {
 
 
     void Update () {
+        Debug.Log(canMove);
 
         Vector3 pPos = player.transform.position;
         Vector3 rPos = transform.position;
@@ -111,8 +113,10 @@ public class MoveRocks : MonoBehaviour {
                 kittenAnim.SetBool("Fleeing", false);
             }
 
-            
-            transform.position += transform.forward * speed * Time.deltaTime;
+            if (canMove)
+            {
+                transform.position += transform.forward * speed * Time.deltaTime;
+            }
         }
 	}
 
@@ -126,8 +130,11 @@ public class MoveRocks : MonoBehaviour {
 
         Vector2 tangent1, tangent2;
         MathUtil.getTangentsFromPoint(self2d, obstacle2d, avoidRadius, out tangent1, out tangent2);
-        Vector2 choosenTangent = MathUtil.pickCloserTangent(tangent1, tangent2, self2d, player2d, nest2d,false);
-        return  new Vector3(choosenTangent.x, transform.position.y, choosenTangent.y);
+        Vector2 chosenTangent = MathUtil.pickCloserTangent(tangent1, tangent2, self2d, player2d, nest2d,false);
+
+        // ha a ket erinto tul kozel van egymashoz oda vissza valtogat a cica ezt keruli ez el
+        
+        return  new Vector3(chosenTangent.x, transform.position.y, chosenTangent.y);
         
     }
 
@@ -142,6 +149,27 @@ public class MoveRocks : MonoBehaviour {
 
     private void FixedUpdate()
     {
+        Vector3 higherRayCastOrigin = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+        Vector3 lowerRayCastOrigin = transform.position;
+
+        if (kittenAnim.GetBool("Jumping"))
+        {
+            kittenAnim.SetBool("Jumping", false);
+        }
+
+        RaycastHit hit;
+
+        Physics.Raycast(lowerRayCastOrigin, transform.forward, out hit);
+       
+        if(hit.collider != null && hit.collider.tag == "Shroom")
+        {
+            if(Vector3.Distance(hit.point, transform.position) < 1.5f)
+            {
+                GetComponent<Rigidbody>().AddForce(transform.up* 15);
+                kittenAnim.SetBool("Jumping", true);
+            }
+        }
+
         
     }
 }

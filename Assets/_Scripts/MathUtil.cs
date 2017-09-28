@@ -71,6 +71,24 @@ public class MathUtil
         }
     }
 
+    public static Vector2 pickCloserTangentForObstacle(Vector2 t1, Vector2 t2, Vector2 rock, Vector2 obstacle, Vector2 nest, bool pickCloser)
+    {
+        float d1 = Vector2.Distance(t1, obstacle);
+        float d2 = Vector2.Distance(t2, obstacle);
+
+        if (Mathf.Abs(d1 - d2) < 0.05f)
+        {
+            return new Vector2(999, 0);
+        }
+
+        if (pickCloser)
+            return d1 < d2 ? t1 : t2;
+        else
+        {
+            return d1 < d2 ? t2 : t1;
+        }
+    }
+
     public static float distance(Vector2 p1, Vector2 p2)
     {
         return Mathf.Sqrt(Mathf.Pow((p1.x - p2.x), 2) + Mathf.Pow((p1.y - p2.y), 2));

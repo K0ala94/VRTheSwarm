@@ -16,16 +16,11 @@ public class RuneStartMarker : MonoBehaviour {
 
     void Update () {
 
-        
-
-       
-        Debug.Log(Mathf.Abs(transform.position.y - forth.position.y));
-
-        if (Mathf.Abs( transform.position.y - forth.position.y)  < 0.1f)
+        if (Mathf.Abs( Vector3.Distance(transform.position, forth.position))  < 0.1f)
         {
             backwards = true;
         }
-        else if(Mathf.Abs(transform.position.y - back.position.y) < 0.1f)
+        else if(Mathf.Abs(Vector3.Distance(transform.position, back.position)) < 0.1f)
         {
             backwards = false ;
         }

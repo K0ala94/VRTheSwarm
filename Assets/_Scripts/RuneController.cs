@@ -37,6 +37,7 @@ public class RuneController : MonoBehaviour {
         drawing = true;
         PointerEventData pointerData = data as PointerEventData;
         Vector3 pointerPos = pointerData.pointerCurrentRaycast.worldPosition;
+        DestroyImmediate(GameObject.Find("StartMarker"));
 
         if (sparkl == null)
         {
