@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveRocks : MonoBehaviour {
+public class KittenController : MonoBehaviour {
 
     public float rockSpeed;
     public float fasterRockSpeed;
@@ -163,7 +163,7 @@ public class MoveRocks : MonoBehaviour {
        
         if(hit.collider != null && hit.collider.tag == "Shroom")
         {
-            if(Vector3.Distance(hit.point, transform.position) < 1.5f)
+            if(Vector3.Distance(hit.point, transform.position) < 1.6f)
             {
                 GetComponent<Rigidbody>().AddForce(transform.up* 15);
                 kittenAnim.SetBool("Jumping", true);

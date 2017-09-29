@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour {
     private void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        
     }
 
     public void decreaseHealth(int damage)
@@ -34,5 +35,7 @@ public class PlayerHealth : MonoBehaviour {
             yield return null;
         }
     }
+
+    
 
 }

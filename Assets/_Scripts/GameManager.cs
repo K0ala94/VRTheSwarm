@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour {
     public Transform runeOgreSpawnPoint;
     public Transform respawnPoint;
 
+
     public bool PracticeRunesDone { get; set; }
     public bool LearnRunesDone { get; set; }
     public bool PlayerReturnedToOgre { get; set; }
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
+        fadeIn();
         PracticeRunesDone = false;
         LearnRunesDone = false;
         PlayerReturnedToOgre = false;
@@ -93,6 +96,7 @@ public class GameManager : MonoBehaviour {
     {
         Phase1 = false;
         Phase2 = false;
+        fadeOut();
         Invoke("resetGameStateToBeforeFight", 4.0f);
     }
 
@@ -103,6 +107,17 @@ public class GameManager : MonoBehaviour {
         reSpawnOgre();
         DestroyImmediate(GameObject.Find("Player"));
         Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity).name = "Player";
+        fadeIn();
+    }
+
+    private void fadeIn()
+    {
+        GameObject.Find("FadePanel").GetComponent<Image>().CrossFadeAlpha(0f, 2.0f, true);
+    }
+
+    private void fadeOut()
+    {
+        GameObject.Find("FadePanel").GetComponent<Image>().CrossFadeAlpha(1.0f, 4.0f, true);
     }
 
 }
