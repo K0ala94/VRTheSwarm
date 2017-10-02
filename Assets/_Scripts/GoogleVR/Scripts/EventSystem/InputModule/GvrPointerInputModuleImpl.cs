@@ -272,7 +272,7 @@ public class GvrPointerInputModuleImpl {
     bool shouldStartDrag = ShouldStartDrag(CurrentEventData.pressPosition,
                              CurrentEventData.position,
                              ModuleController.eventSystem.pixelDragThreshold,
-                             CurrentEventData.useDragThreshold);
+                             false);
 
     if (moving && shouldStartDrag && CurrentEventData.pointerDrag != null && !CurrentEventData.dragging) {
       EventExecutor.Execute(CurrentEventData.pointerDrag, CurrentEventData,
