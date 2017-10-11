@@ -37,6 +37,12 @@ public class GameManager : MonoBehaviour {
         Phase2 = false;
     }
 
+    public void startGame()
+    {
+        GameObject.Find("Player").GetComponent<VRPlayerController>().CanMove = true;
+        Destroy(GameObject.Find("StartPhaseDialoge"), 0.1f);
+    }
+
 
     public void spawnRune()
     {
@@ -107,7 +113,22 @@ public class GameManager : MonoBehaviour {
         reSpawnOgre();
         DestroyImmediate(GameObject.Find("Player"));
         Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity).name = "Player";
+        
+        GameObject.Find("Player").GetComponent<Transform>().Rotate(0,50,0);
+        
         fadeIn();
+    }
+
+    public void jumpToOgreFight()
+    {
+        Destroy(GameObject.Find("StartPhaseDialoge"),0.1f);
+
+        PracticeRunesDone = true;
+        LearnRunesDone = true;
+        PlayerReturnedToOgre = true;
+
+        respawnPlayer();
+
     }
 
     private void fadeIn()
