@@ -69,11 +69,10 @@ public class WizzardController : MonoBehaviour {
                     gameManager.Phase1 = false;
                     gameManager.Phase2 = true;
                 }
-                //Debug.Log("1 Phase 1");
+                
             }
             else if (gameManager.Phase2)
             {
-                //Debug.Log(" 2 Phase 2");
                 
             }
 
@@ -102,8 +101,11 @@ public class WizzardController : MonoBehaviour {
             }
             else if (other.gameObject.CompareTag("Player") && gameManager.PlayerReturnedToOgre)
             {
-                startDialoge();
-                continoueSecondDialoge();
+                if (!dialogeActive) {
+                    startDialoge();
+                    continoueSecondDialoge();
+                }
+                
             }
             else if (other.tag.Equals("WizzardsHome") && !gameManager.PlayerReturnedToOgre)
             {
@@ -158,10 +160,10 @@ public class WizzardController : MonoBehaviour {
 
     private void startDialoge()
     {
-        activeDialoge = (GameObject)Instantiate(dialogePrefab, dialogeSpawnPoint.position, Quaternion.identity);
-        dialogeActive = true;
-        player.GetComponent<VRPlayerController>().CanMove = false;
-        player.GetComponent<VRPlayerController>().move = false;
+            activeDialoge = (GameObject)Instantiate(dialogePrefab, dialogeSpawnPoint.position, Quaternion.identity);
+            dialogeActive = true;
+            player.GetComponent<VRPlayerController>().CanMove = false;
+            player.GetComponent<VRPlayerController>().move = false;
     }
 
     public void AcceptQuest()
