@@ -15,15 +15,18 @@ public class PlayerHealth : MonoBehaviour {
 
     public void decreaseHealth(int damage)
     {
-        health -= damage;
-        Debug.Log(health);
-        if(health <= 0)
+        if (!gameManager.godMode)
         {
-            Debug.Log(" YOU DIED !");
-            StartCoroutine(die());
-            GetComponent<Rigidbody>().isKinematic = true;
-            GetComponent<VRPlayerController>().CanMove = false;
-            gameManager.respawnPlayer();
+            health -= damage;
+            Debug.Log(health);
+            if (health <= 0)
+            {
+                Debug.Log(" YOU DIED !");
+                StartCoroutine(die());
+                GetComponent<Rigidbody>().isKinematic = true;
+                GetComponent<VRPlayerController>().CanMove = false;
+                gameManager.respawnPlayer();
+            }
         }
     }
 

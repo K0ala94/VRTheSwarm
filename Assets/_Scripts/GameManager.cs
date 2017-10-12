@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
     public Transform runeOgreSpawnPoint;
     public Transform respawnPoint;
 
-
+    public bool godMode;
     public bool PracticeRunesDone { get; set; }
     public bool LearnRunesDone { get; set; }
     public bool PlayerReturnedToOgre { get; set; }
@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour {
         PracticeRunesDone = false;
         LearnRunesDone = false;
         PlayerReturnedToOgre = false;
+        godMode = false;
         OgreAlive = true;
         Phase1 = false;
         Phase2 = false;
@@ -126,6 +127,7 @@ public class GameManager : MonoBehaviour {
         PracticeRunesDone = true;
         LearnRunesDone = true;
         PlayerReturnedToOgre = true;
+        godMode = true;
 
         respawnPlayer();
 
