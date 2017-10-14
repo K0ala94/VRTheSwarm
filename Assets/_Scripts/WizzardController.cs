@@ -17,18 +17,31 @@ public class WizzardController : MonoBehaviour {
     private int dialogeStateCounter = 0;
     public float health = 100;
 
+    private readonly string[] enDialoge1 = new string[] {"Greetings Wonderer! \n What a pleasent surprise, this can't be a coincidance... ",
+                                             "I would be extremely grateful if you could help me out, \n and generous to say the least",
+                                             "My delicious ugrhmmmmm... \n My dear kittens ran away from me \n They dwell in these forests now",
+                                             "Could you catch at least one of them for me please? \n My caldron is ughh.. My life is empty without them",
+                                             "Now go find them!"};
+
+    private readonly string[] enDialoge2 = new string[] {"A TIGER !? \n I see you spoke to the wizzard",
+                                            "Hahh you cant imagine how big of a mistake you made!",
+                                            "and now PREPARE TO DIE !!!"};
+
+    private readonly string[] hunDialoge1 = new string[] { "Köszöntelek Kalandor! \n Érkezésed nem lehet véletlen.. ",
+                                            "Az én ízletes ughrmmm.. Az én kedves kis cicáim elszöktek a erdőbe.",
+                                            "El tudnád nekem kapni legalább egyiküket? \n Az ebédem ugrhmm.. A világot jelentik nekem!",
+                                            "Most menj! Keresd meg őket!" };
+
+    private readonly string[] hunDialoge2 = new string[] {"Egy TIGRIS !? \n  Látom beszéltél a varázslóval..",
+                                            "Hahh Bolond!! El sem tudod képzelni mekkora hibát követtél el",
+                                            "Készülj a HALÁLRA !!!"};
+
     void Start () {
         player = GameObject.Find("Player");
         home = GameObject.Find("OgreDoor");
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        firstEncounterText = new string[] {"Greetings Wonderer! \n What a pleasent surprise, this can't be a coincidance... ",
-                             "I would be extremely grateful if you could help me out, \n and generous to say the least",
-                             "My delicious ugrhmmmmm... \n My dear kittens ran away from me \n They dwell in these forests now",
-                             "Could you catch at least one of them for me please? \n My caldron is ughh.. My life is empty without them",
-                             "Now go find them!"};
-        secondEncounterText = new string[] {"A TIGER !? \n I see you spoke to the wizzard",
-                                            "Hahh you cant imagine how big of a mistake you made!",
-                                            "and now PREPARE TO DIE !!!"};
+        firstEncounterText = hunDialoge1;
+        secondEncounterText = hunDialoge2;
 }
 	
 	

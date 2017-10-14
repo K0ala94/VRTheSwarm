@@ -48,6 +48,7 @@ public class RuneController : MonoBehaviour {
 
     public void drawTheRune(BaseEventData data)
     {
+        Debug.Log("Draaaaag");
         PointerEventData pointerData = data as PointerEventData;
         Vector3 pointerPos = pointerData.pointerCurrentRaycast.worldPosition;
 
@@ -70,6 +71,7 @@ public class RuneController : MonoBehaviour {
     {
         faults = 0;
         checkPointCount = 0;
+        GetComponent<LineDrawer>().resetLineDrawer();
         foreach (var cp in checkPoints)
         {
             cp.enabled = true;

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
     public Transform[] spawnPoints;
     public GameObject kittenSpawnerCenter;
     public GameObject ogrePrefab;
+    public GameObject menu;
     public Transform ogreSpawnPoint;
     public GameObject markerPrefab;
     public GameObject playerPrefab;
@@ -28,6 +29,8 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
+        menu = GameObject.Find("StartPhaseDialoge");
+        menu.SetActive(false);
         fadeIn();
         PracticeRunesDone = false;
         LearnRunesDone = false;
@@ -131,6 +134,12 @@ public class GameManager : MonoBehaviour {
 
         respawnPlayer();
 
+    }
+
+    public void continueToTheMenu()
+    {
+        DestroyImmediate(GameObject.Find("Manual").gameObject);
+        menu.SetActive(true);
     }
 
     private void fadeIn()

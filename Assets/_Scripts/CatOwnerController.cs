@@ -127,7 +127,7 @@ public class CatOwnerController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("PlayerInteract"))
+        if (other.gameObject.CompareTag("PlayerInteract") && !dialogeActive)
         {
             if (!firstDialogeDone)
             {

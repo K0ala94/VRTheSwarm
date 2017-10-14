@@ -28,19 +28,27 @@ public class LineDrawer : MonoBehaviour {
             shouldDraw = false;
         else
             shouldDraw = true;
-
-        
+ 
     }
 
 	void Start () {
         lineRenderer = gameObject.AddComponent<LineRenderer>();
 
-        lineRenderer.startWidth=0.02f;
-        lineRenderer.endWidth = 0.02f;
+        lineRenderer.startWidth=0.01f;
+        lineRenderer.endWidth = 0.01f;
+        //lineRenderer.alignment = LineAlignment.Local;
         Material mat = new Material(Shader.Find("Standard"));
         mat.color = Color.black;
         lineRenderer.material = mat;
 	}
+
+    public void resetLineDrawer()
+    {
+        points = new List<Vector3>();
+        pointCount = 0;
+        lineRenderer.positionCount = pointCount++;
+        lineRenderer.SetPositions(points.ToArray());
+    }
 
 	void Update () {
 		
