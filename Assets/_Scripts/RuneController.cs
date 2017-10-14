@@ -17,13 +17,18 @@ public class RuneController : MonoBehaviour {
     public int checkPointCount = 0;
     private string resultDialogeText;
     public bool dragging = false;
+    public string runeType;
 
 
     public void pointerExit()
     {
         destroySparkle();
         if (drawing)
+        {
             faults++;
+            AdaptEDConnector.sendRuneFaultEvent(faults, runeType);
+        }
+            
     }
 
     public void pointerRelease()
@@ -48,7 +53,6 @@ public class RuneController : MonoBehaviour {
 
     public void drawTheRune(BaseEventData data)
     {
-        Debug.Log("Draaaaag");
         PointerEventData pointerData = data as PointerEventData;
         Vector3 pointerPos = pointerData.pointerCurrentRaycast.worldPosition;
 
@@ -96,8 +100,8 @@ public class RuneController : MonoBehaviour {
         if (!gameManager.PracticeRunesDone)
         {
             Debug.Log("Failed: " + faults + "--" + checkPointCount);
-            GetComponent<ResultDialogeController>().displayRsult("Failed: You had " + faults + " faults" +
-                        " and " + (checkPoints.Length - checkPointCount) + " missed checkpoints");
+            GetComponent<ResultDialogeController>().displayRsult("Próbáld újra: " + faults + "-szer hibáztál" +
+                        " és " + (checkPoints.Length - checkPointCount) + " ellenőrzőpontot hagytál ki");
             Invoke("resetRune", 3f);
         }
         else
@@ -125,7 +129,7 @@ public class RuneController : MonoBehaviour {
         else
         {
             Debug.Log("Success: " + faults + "--" + checkPointCount);
-            GetComponent<ResultDialogeController>().displayRsult("Congratulations you learnt a new spell");
+            GetComponent<ResultDialogeController>().displayRsult("Gratulálok, Új varázslatot tanultál!");
             gameManager.spawnRune();
             Destroy(gameObject, 3f);
         }
