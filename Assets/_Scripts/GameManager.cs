@@ -11,13 +11,15 @@ public class GameManager : MonoBehaviour {
     public Transform[] spawnPoints;
     public GameObject kittenSpawnerCenter;
     public GameObject ogrePrefab;
-    public GameObject menu;
+    private GameObject menu;
+    private GameObject restartButton;
     public Transform ogreSpawnPoint;
     public GameObject markerPrefab;
     public GameObject playerPrefab;
     public Transform runePracticeSpawnPoint;
     public Transform runeOgreSpawnPoint;
     public Transform respawnPoint;
+    public Transform playerStartSpawn;
 
     public bool godMode;
     public bool PracticeRunesDone { get; set; }
@@ -30,7 +32,11 @@ public class GameManager : MonoBehaviour {
     private void Start()
     {
         menu = GameObject.Find("StartPhaseDialoge");
+        restartButton = GameObject.Find("RestartButton");
+
         menu.SetActive(false);
+        restartButton.SetActive(false);
+
         fadeIn();
         PracticeRunesDone = false;
         LearnRunesDone = false;
@@ -96,10 +102,21 @@ public class GameManager : MonoBehaviour {
         kittenSpawnerCenter.GetComponent<KittenSpawner>().spawnKittens();
     }
 
-    public void reSpawnOgre()
+    public void dealyedDisplayRestartButton()
     {
+        Invoke("displayRestartButton", 3.0f);
+    }
+
+    private void displayRestartButton()
+    {
+        restartButton.SetActive(true);
+    }
+
+    public void reSpawnOgre(bool returnToOgre)
+    {
+        DestroyImmediate(GameObject.Find("Ogre"));
         Instantiate(ogrePrefab, ogreSpawnPoint.position, Quaternion.identity).name = "Ogre";
-        PlayerReturnedToOgre = true;
+        PlayerReturnedToOgre = returnToOgre;
     }
 
     public void respawnPlayer()
@@ -112,9 +129,8 @@ public class GameManager : MonoBehaviour {
 
     private void resetGameStateToBeforeFight()
     {
-        DestroyImmediate(GameObject.Find("Ogre"));
         DestroyImmediate(GameObject.FindGameObjectWithTag("Rune"));
-        reSpawnOgre();
+        reSpawnOgre(true);
         DestroyImmediate(GameObject.Find("Player"));
         Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity).name = "Player";
         
@@ -125,7 +141,7 @@ public class GameManager : MonoBehaviour {
 
     public void jumpToOgreFight()
     {
-        Destroy(GameObject.Find("StartPhaseDialoge"),0.1f);
+        menu.SetActive(false);
 
         PracticeRunesDone = true;
         LearnRunesDone = true;
@@ -133,13 +149,40 @@ public class GameManager : MonoBehaviour {
         godMode = true;
 
         respawnPlayer();
-
     }
 
     public void continueToTheMenu()
     {
         DestroyImmediate(GameObject.Find("Manual").gameObject);
         menu.SetActive(true);
+    }
+
+    public void restartGameOnClick()
+    {
+        fadeOut();
+        Invoke("restartGame", 4.0f);
+    }
+
+    private void restartGame()
+    {
+        reSpawnOgre(false);
+        DestroyImmediate(GameObject.Find("CatOwner"));
+        DestroyImmediate(GameObject.FindGameObjectWithTag("Rune"));
+
+        menu.SetActive(true);
+        restartButton.SetActive(false);
+
+        GameObject player = GameObject.Find("Player");
+        player.GetComponent<VRPlayerController>().CanMove = false;
+        player.transform.position = playerStartSpawn.position;
+
+        PracticeRunesDone = false;
+        LearnRunesDone = false;
+        PlayerReturnedToOgre = false;
+        Phase1 = false;
+        Phase2 = false;
+
+        fadeIn();
     }
 
     private void fadeIn()

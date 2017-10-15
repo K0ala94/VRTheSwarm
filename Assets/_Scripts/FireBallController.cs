@@ -76,6 +76,7 @@ public class FireBallController : MonoBehaviour {
                 gameManager.OgreAlive = false;
                 GameObject.Find("Player").GetComponent<VRPlayerController>().CanMove = true;
                 StartCoroutine(GameObject.Find("Ogre").GetComponent<WizzardController>().die());
+                gameManager.dealyedDisplayRestartButton();
             }
         }
         

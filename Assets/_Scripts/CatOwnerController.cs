@@ -112,7 +112,7 @@ public class CatOwnerController : MonoBehaviour {
         {
             finishDialoge();
             thirdDialogeDone = true;
-            gameManager.reSpawnOgre();
+            gameManager.reSpawnOgre(true);
             createSmoke();
         }
     }
