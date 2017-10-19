@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
     public GameObject ogrePrefab;
     private GameObject menu;
     private GameObject restartButton;
+    public GameObject tigerPrefab;
     public Transform ogreSpawnPoint;
     public GameObject markerPrefab;
     public GameObject playerPrefab;
@@ -97,6 +98,12 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    private void spawnTiger()
+    {
+        DestroyImmediate(GameObject.Find("Tiger"));
+        Instantiate(tigerPrefab, GameObject.Find("TigerRespawnPoint").transform.position, Quaternion.identity);
+    }
+
     public void spawnKittens()
     {
         kittenSpawnerCenter.GetComponent<KittenSpawner>().spawnKittens();
@@ -134,6 +141,8 @@ public class GameManager : MonoBehaviour {
         DestroyImmediate(GameObject.Find("Player"));
         Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity).name = "Player";
         
+        spawnTiger();
+
         GameObject.Find("Player").GetComponent<Transform>().Rotate(0,50,0);
         
         fadeIn();

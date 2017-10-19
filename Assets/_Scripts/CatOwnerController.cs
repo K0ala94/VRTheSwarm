@@ -22,7 +22,7 @@ public class CatOwnerController : MonoBehaviour {
     private string[] thirdEncounterText;
     private Animator catOwnerAnimator;
 
-    private string[] dialogeHUn1 = new string[] {"A cicáim.. ! \n Halálra vannak rettenve odabent. \nMegtudhatnám miért kergeted őket?",
+    private string[] dialogeHUn1 = new string[] {"A cicáim.. ! \nHalálra vannak rettenve odabent. \nMegtudhatnám miért kergeted őket?",
                                             "Fogadjunk, hogy egint annak az álnok Ogrénak a keze van ebben \n CICÁKAT eszik!!", 
                                             "Segítened kell legyőzni őt! \n De még nem állsz készen rá, tanulnod kell!",
                                             "Ősi erővel bíró rúnák találhatók az erdőben \n Találd meg mind a négyet és rajzold végig őket",

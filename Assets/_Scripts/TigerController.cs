@@ -11,11 +11,12 @@ public class TigerController : MonoBehaviour {
 	void Start () {
         player = GameObject.Find("Player");
         tigerAnim = GetComponent<Animator>();
+        tigerAnim.SetBool("Follow", true);
 	}
 	
 	
 	void Update () {
-        if (Vector3.Distance(transform.position, player.transform.position) < 2)
+        if (Vector3.Distance(transform.position, player.transform.position) < 3)
         {
             tigerAnim.SetBool("Follow", false);
             following = false;
