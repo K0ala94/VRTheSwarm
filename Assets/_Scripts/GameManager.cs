@@ -98,10 +98,11 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void spawnTiger()
+    private void spawnTiger(bool shouldRespawnTiger)
     {
         DestroyImmediate(GameObject.Find("Tiger"));
-        Instantiate(tigerPrefab, GameObject.Find("TigerRespawnPoint").transform.position, Quaternion.identity);
+        if(shouldRespawnTiger)
+            Instantiate(tigerPrefab, GameObject.Find("TigerRespawnPoint").transform.position, Quaternion.identity).name = "Tiger";
     }
 
     public void spawnKittens()
@@ -141,7 +142,7 @@ public class GameManager : MonoBehaviour {
         DestroyImmediate(GameObject.Find("Player"));
         Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity).name = "Player";
         
-        spawnTiger();
+        spawnTiger(true);
 
         GameObject.Find("Player").GetComponent<Transform>().Rotate(0,50,0);
         
@@ -175,9 +176,10 @@ public class GameManager : MonoBehaviour {
     private void restartGame()
     {
         reSpawnOgre(false);
+        spawnTiger(false);
         DestroyImmediate(GameObject.Find("CatOwner"));
         DestroyImmediate(GameObject.FindGameObjectWithTag("Rune"));
-        DestroyImmediate(GameObject.Find("DialogeWorldSapce"));
+        DestroyImmediate(GameObject.Find("DialogeWorldSapce(Clone)"));
 
         menu.SetActive(true);
         restartButton.SetActive(false);
