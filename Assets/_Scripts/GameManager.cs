@@ -168,6 +168,7 @@ public class GameManager : MonoBehaviour {
         reSpawnOgre(false);
         DestroyImmediate(GameObject.Find("CatOwner"));
         DestroyImmediate(GameObject.FindGameObjectWithTag("Rune"));
+        DestroyImmediate(GameObject.Find("DialogeWorldSapce"));
 
         menu.SetActive(true);
         restartButton.SetActive(false);
@@ -179,6 +180,7 @@ public class GameManager : MonoBehaviour {
         PracticeRunesDone = false;
         LearnRunesDone = false;
         PlayerReturnedToOgre = false;
+        OgreAlive = true;
         Phase1 = false;
         Phase2 = false;
 

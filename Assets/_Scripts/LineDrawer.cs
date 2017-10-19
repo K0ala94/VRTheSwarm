@@ -9,11 +9,12 @@ public class LineDrawer : MonoBehaviour {
     private int pointCount = 0;
     private LineRenderer lineRenderer;
     private bool shouldDraw = false;
+    private GameManager gameManager;
 
     public void addPointOnDrag(BaseEventData eventData){
         PointerEventData pointerData = (PointerEventData)eventData;
 
-        if (shouldDraw)
+        if (shouldDraw && !gameManager.Phase2)
         {
             points.Add(pointerData.pointerCurrentRaycast.worldPosition);
             lineRenderer.positionCount = pointCount++;
@@ -22,7 +23,7 @@ public class LineDrawer : MonoBehaviour {
        
     }
 
-    public void toggleShouldDraw(BaseEventData bed)
+    public void toggleShouldDraw()
     {
         if (shouldDraw)
             shouldDraw = false;
@@ -31,7 +32,14 @@ public class LineDrawer : MonoBehaviour {
  
     }
 
+    public void onExitTest()
+    {
+        GameObject.Find("Player").GetComponent<Rigidbody>().AddForce(Vector3.up * 200);
+    }
+
 	void Start () {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         lineRenderer = gameObject.AddComponent<LineRenderer>();
 
         lineRenderer.startWidth=0.01f;

@@ -15,7 +15,7 @@ public class BarrelController : MonoBehaviour {
             transform.LookAt(GameObject.Find("Player").transform);
             transform.Rotate(new Vector3(-55, 0, 0));
             rb.angularVelocity = Random.insideUnitSphere * 5;
-            rb.AddForce(transform.forward * 460);
+            rb.AddForce(transform.forward * 450);
         }
 	}
 

@@ -153,7 +153,7 @@ public class RuneController : MonoBehaviour {
 
         if (gameManager.Phase2)
         {
-            transform.RotateAround(gameManager.runeOgreSpawnPoint.position, new Vector3(0, 0, 1), 0.6f);
+            transform.RotateAround(gameManager.runeOgreSpawnPoint.position, new Vector3(1, 0, 1), 0.3f);
             //Masodik fazisban mozgo runak
         }
 
