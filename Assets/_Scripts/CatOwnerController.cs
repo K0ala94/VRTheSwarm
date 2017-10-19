@@ -22,21 +22,39 @@ public class CatOwnerController : MonoBehaviour {
     private string[] thirdEncounterText;
     private Animator catOwnerAnimator;
 
+    private string[] dialogeHUn1 = new string[] {"A cicáim.. ! \n Halálra vannak rettenve odabent. \nMegtudhatnám miért kergeted őket?",
+                                            "Fogadjunk, hogy egint annak az álnok Ogrénak a keze van ebben \n CICÁKAT eszik!!", 
+                                            "Segítened kell legyőzni őt! \n De még nem állsz készen rá, tanulnod kell!",
+                                            "Ősi erővel bíró rúnák találhatók az erdőben \n Találd meg mind a négyet és rajzold végig őket",
+                                            "Megjelöltem a rúnákat neked egy kis varázylattal \n Ha nem tudod merre tovább csak tekints fel az égre",
+                                            "Siess a kiscicáim veszélyben vannak"};
+    private string[] dialogeHUn2 = new string[] {"Látom megtaláltad az összes rúnát \n Szép munka!",
+                                                "Ezen rúnák segítségével hatásos varázslatot szórhatsz az Ogréra \n Csak rajzold végig őket és a megjelenő varázsgömböt dobómozdulattal el tudod lőni",
+                                                "Most menj gyakorolj! \n Térj vissza hozzám ha kész vagy"};
+    private string[] dialogeHUn3 = new string[] {"Készen állsz a harcra! \n Elsajátítottad a varázslatokat",
+                                                 "Irány az ádáz Ogre háza \n Ne felejtsd el, a támadásai elől el tudsz ugrani a a controller elején található touchpad-en jobbra, vagy balra swipe-olsz",
+                                                 "Mielőtt még elindulnánk, \n hadd kisérjen el téged egyik leghűségesebb társam"};
+    private string[] dialogeEn1 = new string[] { "My Kittens... ! \n They are terrified in there. \n Why are you chasing them? ",
+                                            "This must be that cruel Ogre's doing again... \n HE EATS KITTENS !!",
+                                            "You need to help me defeat him! \n But you need to prepare for the fight first!",
+                                            "Acient Runes can be found in these forests. \n Find all four of them and learn their secrets!",
+                                            "I marked the Runes for you.. \n Just look up in the sky if you are lost. \n Hurry up my kittens are in danger" };
+    private string[] dialogeEn2 = new string[] {"I see you found all the Runes \n Well done !",
+                                            "You can cast a spell by drawing a rune and swinging your wand forward when the elemnets of nature appear",
+                                            "Now go practice it!! \n Come back to me when you are done!" };
+    private string[] dialogeEn3 = new string[] { "Great job ! \n You have mastered all the spells",
+                                             "Let's go find that Ogre! \n Remember, you can dodge his attacks by swiping on the touchpad left and right",
+                                             "In addition, \nLet my most loyal companion aid you in your battles"};
+
+
     void Start () {
         player = GameObject.Find("Player");
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         catOwnerAnimator = GetComponent<Animator>();
-        firstEncounterText = new string[]{ "My Kittens... ! \n They are terrified in there. \n Why are you chasing them? ",
-                              "This must be that cruel Ogre's doing again... \n HE EATS KITTENS !!",
-                              "You need to help me defeat him! \n But you need to prepare for the fight first!",
-                              "Acient Runes can be found in these forests. \n Find all four of them and learn their secrets!",
-                              "I marked the Runes for you.. \n Just look up in the sky if you are lost. \n Hurry up my kittens are in danger"};
-        secondEncounterText = new string[] { "I see you found all the Runes \n Well done !",
-                                            "You can cast a spell by drawing a rune and swinging your wand forward when the elemnets of nature appear",
-                                            "Now go practice it!! \n Come back to me when you are done!"};
-        thirdEncounterText = new string[] { "Great job ! \n You have mastered all the spells",
-                                             "Let's go find that Ogre! \n Remember, you can dodge his attacks by swiping on the touchpad left and right",
-                                             "In addition, \nLet my most loyal companion aid you in your battles"};
+        firstEncounterText = dialogeHUn1;
+        secondEncounterText = dialogeHUn2;
+        thirdEncounterText = dialogeHUn3;
+
     }
 	
 	

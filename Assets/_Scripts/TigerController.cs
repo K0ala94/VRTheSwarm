@@ -5,7 +5,7 @@ using UnityEngine;
 public class TigerController : MonoBehaviour {
 
     private Animator tigerAnim;
-    private bool following = false;
+    private bool following = true;
     private GameObject player;
 
 	void Start () {

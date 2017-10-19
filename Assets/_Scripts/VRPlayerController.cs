@@ -25,8 +25,8 @@ public class VRPlayerController : MonoBehaviour {
 	
 	void Update () {
         //mikor kezdodjon a mozgas
-        if (GvrControllerInput. IsTouching)
-        {
+        //if (GvrControllerInput. IsTouching)
+        //{
             if (vrCamera.eulerAngles.x > 20 && vrCamera.eulerAngles.x < 50)
             {
                 move = true;
@@ -53,11 +53,11 @@ public class VRPlayerController : MonoBehaviour {
                 // Vector3 forward = vrCamera.TransformDirection(Vector3.forward);
                 // cController.SimpleMove(forward * playerSpeed);
             }
-        }
+        //}
 
         if (GvrControllerInput.TouchUp)
         {
-           move = false;
+           //move = false;
         }
 
         if (GvrControllerInput.AppButtonDown)

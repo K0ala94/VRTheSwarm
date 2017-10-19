@@ -163,7 +163,7 @@ public class KittenController : MonoBehaviour {
        
         if(hit.collider != null && hit.collider.tag == "Shroom")
         {
-            if(Vector3.Distance(hit.point, transform.position) < 1.6f)
+            if(Vector3.Distance(hit.point, transform.position) < 1.7f)
             {
                 GetComponent<Rigidbody>().AddForce(transform.up* 15);
                 kittenAnim.SetBool("Jumping", true);
