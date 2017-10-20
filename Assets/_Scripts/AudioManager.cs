@@ -17,6 +17,8 @@ public class AudioManager : MonoBehaviour {
             sound.source.loop = sound.loop;
             sound.source.clip = sound.clip;
         }
+
+        playSound("forestSound");
 	}
 	
 	public void playSound(string name)
@@ -26,5 +28,34 @@ public class AudioManager : MonoBehaviour {
         {
             sound.source.Play();
         }
+    }
+
+    public void stopSound(string name)
+    {
+        Sound sound = Array.Find(sounds, s => s.name.Equals(name));
+        if (sound != null)
+        {
+            sound.source.Pause();
+        }
+    }
+
+    public bool isPlaying(String name)
+    {
+        Sound sound = Array.Find(sounds, s => s.name.Equals(name));
+        if (sound != null)
+        {
+            return sound.source.isPlaying;
+        }
+        return true;
+    }
+
+    public void setVolume(String name, float vol)
+    {
+        Sound sound = Array.Find(sounds, s => s.name.Equals(name));
+        if (sound != null)
+        {
+            sound.source.volume = vol;
+        }
+        
     }
 }

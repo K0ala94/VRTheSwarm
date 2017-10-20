@@ -11,6 +11,7 @@ public class VRPlayerController : MonoBehaviour {
     private CharacterController cController;
     public GameObject fireBallPrefab;
     private GameManager gameManager;
+    private AudioManager audioManager;
    
     
 
@@ -20,13 +21,15 @@ public class VRPlayerController : MonoBehaviour {
         cController = GetComponent<CharacterController>();
         CanMove = false;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-	}
+        audioManager = FindObjectOfType<AudioManager>();
+
+    }
 	
 	
 	void Update () {
         //mikor kezdodjon a mozgas
-        if (GvrControllerInput. IsTouching)
-        {
+        //if (GvrControllerInput. IsTouching)
+        //{
             if (vrCamera.eulerAngles.x > 20 && vrCamera.eulerAngles.x < 50)
             {
                 move = true;
@@ -53,11 +56,12 @@ public class VRPlayerController : MonoBehaviour {
                 // Vector3 forward = vrCamera.TransformDirection(Vector3.forward);
                 // cController.SimpleMove(forward * playerSpeed);
             }
-        }
+            manageWalkSound();
+        //}
 
         if (GvrControllerInput.TouchUp)
         {
-           move = false;
+           //move = false;
         }
 
         if (GvrControllerInput.AppButtonDown)
@@ -66,6 +70,14 @@ public class VRPlayerController : MonoBehaviour {
             
         }
 	}
+
+    private void manageWalkSound()
+    {
+        if(!audioManager.isPlaying("walkSound") && move && CanMove)
+            audioManager.playSound("walkSound");
+        else if(audioManager.isPlaying("walkSound") && (!move || !CanMove))
+            audioManager.stopSound("walkSound");
+    }
 
     private void FixedUpdate()
     {

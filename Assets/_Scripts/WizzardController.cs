@@ -10,6 +10,7 @@ public class WizzardController : MonoBehaviour {
     private GameObject activeDialoge;
     private GameObject home;
     private GameManager gameManager;
+    private AudioManager audioManager;
     private bool questAccepted = false;
     private bool dialogeActive = false;
     private string[] firstEncounterText;
@@ -40,6 +41,7 @@ public class WizzardController : MonoBehaviour {
         player = GameObject.Find("Player");
         home = GameObject.Find("OgreDoor");
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        audioManager = FindObjectOfType<AudioManager>();
         firstEncounterText = hunDialoge1;
         secondEncounterText = hunDialoge2;
 }
@@ -114,10 +116,12 @@ public class WizzardController : MonoBehaviour {
             }
             else if (other.gameObject.CompareTag("Player") && gameManager.PlayerReturnedToOgre)
             {
+                audioManager.playSound("fightMusic");
                 if (!dialogeActive) {
                     startDialoge();
                     continoueSecondDialoge();
                 }
+
                 
             }
             else if (other.tag.Equals("WizzardsHome") && !gameManager.PlayerReturnedToOgre)
@@ -200,6 +204,7 @@ public class WizzardController : MonoBehaviour {
 
     public IEnumerator die()
     {
+        audioManager.stopSound("fightMusic");
         for (int i = 1; i < 90; i++)
         {
             transform.Rotate(new Vector3(-1, 0, 0));

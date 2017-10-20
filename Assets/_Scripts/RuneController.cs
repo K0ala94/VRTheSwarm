@@ -13,10 +13,10 @@ public class RuneController : MonoBehaviour {
     public GameObject fireBallPrefab;
     private Collider[] checkPoints;
     private GameManager gameManager;
+    private AudioManager audioManager;
     private int faults;
     public int checkPointCount = 0;
     private string resultDialogeText;
-    public bool dragging = false;
     public string runeType;
 
 
@@ -26,6 +26,7 @@ public class RuneController : MonoBehaviour {
         if (drawing)
         {
             faults++;
+            audioManager.stopSound("drawingSound");
             AdaptEDConnector.sendRuneFaultEvent(faults, runeType);
         }
             
@@ -35,6 +36,7 @@ public class RuneController : MonoBehaviour {
     {
         drawing = false;
         destroySparkle();
+        audioManager.stopSound("drawingSound"); 
     }
 
     public void startDrawing(BaseEventData data)
@@ -44,10 +46,20 @@ public class RuneController : MonoBehaviour {
         Vector3 pointerPos = pointerData.pointerCurrentRaycast.worldPosition;
         DestroyImmediate(GameObject.Find("StartMarker"));
 
+        audioManager.playSound("drawingSound");
+
         if (sparkl == null)
         {
             sparkl = Instantiate(sparklPrefab, pointerPos, Quaternion.Euler(0, 0, 0));
             sparkl.transform.SetParent(transform);
+        }
+    }
+
+    public void pointerEnter()
+    {
+        if (drawing)
+        {
+            audioManager.playSound("drawingSound");
         }
     }
 
@@ -82,6 +94,7 @@ public class RuneController : MonoBehaviour {
         }
         transform.Find("RuneEnd").GetComponent<Collider>().enabled = true;
     }
+
 
     public void evaluateRunePerformance()
     {
@@ -139,6 +152,7 @@ public class RuneController : MonoBehaviour {
         player = GameObject.Find("Player");
         checkPoints = GetComponents<Collider>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 	
 	
