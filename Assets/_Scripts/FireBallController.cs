@@ -16,6 +16,7 @@ public class FireBallController : MonoBehaviour {
     void Start () {
         DDController = GameObject.Find("GvrControllerPointer");
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        FindObjectOfType<AudioManager>().playSoundOnObject("magicball", gameObject);
 	}
 	
 	
@@ -53,7 +54,7 @@ public class FireBallController : MonoBehaviour {
         shooting = true;
         Transform camera = GameObject.Find("VrCamera").transform;
         Quaternion origRot = camera.rotation;
-        camera.Rotate(new Vector3(-10f, 0, 0));
+        camera.Rotate(new Vector3(-8f, 0, 0));
         GetComponent<Rigidbody>().velocity = camera.forward * GvrControllerInput.Gyro.x* 2;
         camera.rotation = origRot;
         Destroy(gameObject, 4);
@@ -68,6 +69,8 @@ public class FireBallController : MonoBehaviour {
             Instantiate(damageDisplayPrefab, transform.position, Quaternion.identity);
             Text dmgText = GameObject.Find("DamageText").GetComponent<Text>();
             dmgText.text ="-"+ damage;
+
+            FindObjectOfType<AudioManager>().playSound("grunt");
 
             Debug.Log(other.GetComponent<WizzardController>().health);
             if(other.GetComponent<WizzardController>().health <= 0)

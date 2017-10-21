@@ -9,6 +9,7 @@ public class CatOwnerController : MonoBehaviour {
     public GameObject tigerPrefab;
     public GameObject smokePrefab;
     private GameManager gameManager;
+    private AudioManager audioManager;
     public GameObject dialogePrefab;
     private GameObject activeDialoge;
     public Transform dialogeSpawnPoint;
@@ -50,6 +51,7 @@ public class CatOwnerController : MonoBehaviour {
     void Start () {
         player = GameObject.Find("Player");
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        audioManager = FindObjectOfType<AudioManager>();
         catOwnerAnimator = GetComponent<Animator>();
         firstEncounterText = dialogeHUn1;
         secondEncounterText = dialogeHUn2;
@@ -156,11 +158,13 @@ public class CatOwnerController : MonoBehaviour {
             {
                 startDialoge();
                 continoueSecondDialoge();
+                audioManager.playSound("questDone");
             }
             else if (gameManager.PracticeRunesDone && !thirdDialogeDone)
             {
                 startDialoge();
                 continoueThirdDialoge();
+                audioManager.playSound("questDone");
             }
         }
     }

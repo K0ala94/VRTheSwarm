@@ -11,11 +11,14 @@ public class AudioManager : MonoBehaviour {
 	void Start () {
 		foreach(Sound sound in sounds)
         {
-            sound.source = gameObject.AddComponent<AudioSource>();
-            sound.source.volume = sound.volume;
-            sound.source.pitch = sound.pitch;
-            sound.source.loop = sound.loop;
-            sound.source.clip = sound.clip;
+            if (!sound.localSound)
+            {
+                sound.source = gameObject.AddComponent<AudioSource>();
+                sound.source.volume = sound.volume;
+                sound.source.pitch = sound.pitch;
+                sound.source.loop = sound.loop;
+                sound.source.clip = sound.clip;
+            }
         }
 
         playSound("forestSound");
@@ -57,5 +60,22 @@ public class AudioManager : MonoBehaviour {
             sound.source.volume = vol;
         }
         
+    }
+
+    public void playSoundOnObject(String name, GameObject o)
+    {
+        Sound sound = Array.Find(sounds, s => s.name.Equals(name));
+        if (sound != null)
+        {
+            AudioSource attachedSource = o.AddComponent<AudioSource>();
+            sound.source = attachedSource;
+            sound.source.volume = sound.volume;
+            sound.source.pitch = sound.pitch;
+            sound.source.loop = sound.loop;
+            sound.source.clip = sound.clip;
+            sound.source.spatialBlend = 1.0f;
+
+            sound.source.Play();
+        }   
     }
 }

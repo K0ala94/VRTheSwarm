@@ -10,15 +10,17 @@ public class KittenController : MonoBehaviour {
     public float avoidRadius;
     private float speed;
     private GameObject nest;
-    GameObject player;
+    private GameObject player;
     private bool scared = false;
     private bool goingAroundSomething = false;
     private bool fleeing = false;
     private Animator kittenAnim;
     private GameObject obstacle;
     private bool canMove = true;
+    private AudioManager audioManager;
 
     void Start () {
+        audioManager = FindObjectOfType<AudioManager>();
         player = GameObject.Find("Player");
         nest = GameObject.Find("Nest");
         kittenAnim = GetComponent<Animator>();
@@ -34,6 +36,7 @@ public class KittenController : MonoBehaviour {
         {
             if (!scared)
             {
+                audioManager.playSound("meow");
                 Rigidbody rb = GetComponent<Rigidbody>();
                 rb.AddForce(transform.up * 150);
             }

@@ -30,11 +30,14 @@ public class BarrelSpawner : MonoBehaviour {
 
     private IEnumerator spawnBarrels()
     {
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(7.0f);
         while (gameManager.OgreAlive && ( gameManager.Phase1 || gameManager.Phase2))
         {
             GameObject barrel = Instantiate(barrelPrefab, barrelSpawn.position, Quaternion.identity);
             Destroy(barrel, 4.0f);
+
+            FindObjectOfType<AudioManager>().playSound("barrelthrow");
+
             yield return new WaitForSeconds(spawnTime);
         }
     }

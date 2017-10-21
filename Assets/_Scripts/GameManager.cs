@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
     public Transform runeOgreSpawnPoint;
     public Transform respawnPoint;
     public Transform playerStartSpawn;
+    private AudioManager audioManager;
 
     public bool godMode;
     public bool PracticeRunesDone { get; set; }
@@ -32,6 +33,8 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
+
         menu = GameObject.Find("StartPhaseDialoge");
         restartButton = GameObject.Find("RestartButton");
 
@@ -50,6 +53,7 @@ public class GameManager : MonoBehaviour {
 
     public void startGame()
     {
+        audioManager.playSound("click");
         GameObject.Find("Player").GetComponent<VRPlayerController>().CanMove = true;
         Destroy(GameObject.Find("StartPhaseDialoge"), 0.1f);
     }
@@ -151,6 +155,8 @@ public class GameManager : MonoBehaviour {
 
     public void jumpToOgreFight()
     {
+        audioManager.playSound("click");
+
         menu.SetActive(false);
 
         PracticeRunesDone = true;
@@ -163,12 +169,14 @@ public class GameManager : MonoBehaviour {
 
     public void continueToTheMenu()
     {
+        audioManager.playSound("click");
         DestroyImmediate(GameObject.Find("Manual").gameObject);
         menu.SetActive(true);
     }
 
     public void restartGameOnClick()
     {
+        audioManager.playSound("click");
         fadeOut();
         Invoke("restartGame", 4.0f);
     }

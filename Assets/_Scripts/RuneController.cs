@@ -116,6 +116,7 @@ public class RuneController : MonoBehaviour {
             GetComponent<ResultDialogeController>().displayRsult("Próbáld újra: " + faults + "-szer hibáztál" +
                         " és " + (checkPoints.Length - checkPointCount) + " ellenőrzőpontot hagytál ki");
             Invoke("resetRune", 3f);
+            audioManager.playSound("runeFail");
         }
         else
         {
@@ -146,6 +147,8 @@ public class RuneController : MonoBehaviour {
             gameManager.spawnRune();
             Destroy(gameObject, 3f);
         }
+
+        audioManager.playSound("runeDone");
     }
 
     void Start () {
@@ -175,9 +178,11 @@ public class RuneController : MonoBehaviour {
         Vector3 rot = transform.rotation.eulerAngles;
         transform.rotation= Quaternion.Euler(new Vector3(startRot.x, rot.y, startRot.z));
 
+    }
 
-
-       
+    private void OnDestroy()
+    {
+        audioManager.stopSound("drawingSound");
     }
 
 
