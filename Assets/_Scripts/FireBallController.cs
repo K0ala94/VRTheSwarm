@@ -70,7 +70,7 @@ public class FireBallController : MonoBehaviour {
             Text dmgText = GameObject.Find("DamageText").GetComponent<Text>();
             dmgText.text ="-"+ damage;
 
-            FindObjectOfType<AudioManager>().playSound("grunt");
+            other.GetComponent<WizzardController>().grunt();
 
             Debug.Log(other.GetComponent<WizzardController>().health);
             if(other.GetComponent<WizzardController>().health <= 0)

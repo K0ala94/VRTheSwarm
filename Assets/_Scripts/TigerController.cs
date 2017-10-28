@@ -16,7 +16,7 @@ public class TigerController : MonoBehaviour {
 	
 	
 	void Update () {
-        if (Vector3.Distance(transform.position, player.transform.position) < 3)
+        if (Vector3.Distance(transform.position, player.transform.position) < 3.5f)
         {
             tigerAnim.SetBool("Follow", false);
             following = false;

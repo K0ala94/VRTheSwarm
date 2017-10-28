@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
+        GameStatistics.resetStats();
+
         audioManager = FindObjectOfType<AudioManager>();
 
         menu = GameObject.Find("StartPhaseDialoge");
@@ -204,6 +206,11 @@ public class GameManager : MonoBehaviour {
         Phase2 = false;
 
         fadeIn();
+    }
+
+    public void recieveAttention(int attention)
+    {
+        AdaptEDConnector.Attention = attention;
     }
 
     private void fadeIn()

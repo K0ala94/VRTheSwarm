@@ -18,6 +18,7 @@ public class RuneController : MonoBehaviour {
     public int checkPointCount = 0;
     private string resultDialogeText;
     public string runeType;
+    private bool chanting = false;
 
 
     public void pointerExit()
@@ -28,6 +29,8 @@ public class RuneController : MonoBehaviour {
             faults++;
             audioManager.stopSound("drawingSound");
             AdaptEDConnector.sendRuneFaultEvent(faults, runeType);
+
+            GameStatistics.addFault(new RuneFault(runeType, AdaptEDConnector.Meditation, AdaptEDConnector.Attention));
         }
             
     }
@@ -156,6 +159,8 @@ public class RuneController : MonoBehaviour {
         checkPoints = GetComponents<Collider>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         audioManager = FindObjectOfType<AudioManager>();
+
+        GameStatistics.registerRuneType(runeType);
     }
 	
 	
@@ -178,6 +183,17 @@ public class RuneController : MonoBehaviour {
         Vector3 rot = transform.rotation.eulerAngles;
         transform.rotation= Quaternion.Euler(new Vector3(startRot.x, rot.y, startRot.z));
 
+        checkToPlayChantingSound();
+
+    }
+
+    private void checkToPlayChantingSound()
+    {
+        if(Vector2.Distance(transform.position,player.transform.position) < 20.0f && !chanting && !gameManager.LearnRunesDone)
+        {
+            chanting = true;
+            audioManager.playSoundOnObject("chanting", gameObject);
+        }
     }
 
     private void OnDestroy()

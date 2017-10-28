@@ -56,13 +56,15 @@ public class VRPlayerController : MonoBehaviour {
                 // Vector3 forward = vrCamera.TransformDirection(Vector3.forward);
                 // cController.SimpleMove(forward * playerSpeed);
             }
-            manageWalkSound();
-        //}
+            
+       // }
 
         if (GvrControllerInput.TouchUp)
         {
-           //move = false;
+          // move = false;
         }
+
+        manageWalkSound();
 
         if (GvrControllerInput.AppButtonDown)
         {

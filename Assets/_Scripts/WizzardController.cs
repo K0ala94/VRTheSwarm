@@ -192,6 +192,11 @@ public class WizzardController : MonoBehaviour {
         gameManager.spawnKittens();
     }
 
+    public void grunt()
+    {
+        audioManager.playSound("grunt");
+    }
+
     private IEnumerator enrage()
     {
         for(int i= 1; i < 200; i++)
