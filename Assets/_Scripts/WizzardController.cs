@@ -210,6 +210,9 @@ public class WizzardController : MonoBehaviour {
     public IEnumerator die()
     {
         audioManager.stopSound("fightMusic");
+
+        GameStatistics.createEndgameStatistics();
+
         for (int i = 1; i < 90; i++)
         {
             transform.Rotate(new Vector3(-1, 0, 0));

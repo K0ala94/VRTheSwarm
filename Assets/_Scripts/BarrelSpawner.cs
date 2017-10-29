@@ -18,7 +18,14 @@ public class BarrelSpawner : MonoBehaviour {
     void Update () {
 
         int meditation = AdaptEDConnector.Meditation;
-        spawnTime = 40000 / (meditation * meditation);
+        if (meditation != 0)
+        {
+            spawnTime = 40000 / (meditation * meditation);
+        }
+        else
+        {
+            spawnTime = 7;
+        }
     }
 
     public void startBarrelThrowing()

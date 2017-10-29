@@ -101,6 +101,8 @@ public class RuneController : MonoBehaviour {
 
     public void evaluateRunePerformance()
     {
+        GameStatistics.registerRuneType(runeType);
+
         if (faults > 2 || checkPointCount < checkPoints.Length)
         {
             onRuneFail();
@@ -159,8 +161,6 @@ public class RuneController : MonoBehaviour {
         checkPoints = GetComponents<Collider>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         audioManager = FindObjectOfType<AudioManager>();
-
-        GameStatistics.registerRuneType(runeType);
     }
 	
 	

@@ -24,7 +24,8 @@ public class AdaptEDConnector {
          }
     }
 
-    public static void sendEndgameStatistics(int faultCount, string runeType)
+    public static void sendEndgameStatistics(string avgPerRunes, float avgFaults, float avgAttention,
+                                      float avgAttentionAtFault, float avgMeditationAtFault)
     {
         if (Application.platform == RuntimePlatform.Android)
         {
@@ -34,7 +35,7 @@ public class AdaptEDConnector {
 
         if (currentActivity != null)
         {
-            currentActivity.Call("exitedRuneWhileDrawing", new object[] { faultCount, runeType });
+            currentActivity.Call("sendEndGameStatistics", new object[] { avgPerRunes, avgFaults,avgAttention,avgAttentionAtFault, avgMeditationAtFault });
         }
     }
 

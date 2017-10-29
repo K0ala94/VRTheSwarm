@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
     public GameObject ogrePrefab;
     private GameObject menu;
     private GameObject restartButton;
+    private GameObject pauseRestartButton;
     public GameObject tigerPrefab;
     public Transform ogreSpawnPoint;
     public GameObject markerPrefab;
@@ -35,14 +36,16 @@ public class GameManager : MonoBehaviour {
     private void Start()
     {
         GameStatistics.resetStats();
-
+        
         audioManager = FindObjectOfType<AudioManager>();
 
         menu = GameObject.Find("StartPhaseDialoge");
         restartButton = GameObject.Find("RestartButton");
+        pauseRestartButton = GameObject.Find("PauseRestartButton");
 
         menu.SetActive(false);
         restartButton.SetActive(false);
+        pauseRestartButton.SetActive(false);
 
         fadeIn();
         PracticeRunesDone = false;
@@ -56,7 +59,7 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
-        if (GvrControllerInput.AppButtonDown)
+        if (GvrControllerInput.AppButtonDown || Input.GetKeyDown(KeyCode.P))
         {
             pauseGame();
         }
@@ -66,7 +69,7 @@ public class GameManager : MonoBehaviour {
     {
         audioManager.playSound("click");
         GameObject.Find("Player").GetComponent<VRPlayerController>().CanMove = true;
-        Destroy(GameObject.Find("StartPhaseDialoge"), 0.1f);
+        menu.SetActive(false);
     }
 
 
@@ -156,7 +159,12 @@ public class GameManager : MonoBehaviour {
         reSpawnOgre(true);
         DestroyImmediate(GameObject.Find("Player"));
         Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity).name = "Player";
-        
+
+        //reset the reference to the restart button
+        pauseRestartButton = GameObject.Find("PauseRestartButton");
+        pauseRestartButton.SetActive(false);
+
+
         spawnTiger(true);
 
         GameObject.Find("Player").GetComponent<Transform>().Rotate(0,50,0);
@@ -188,12 +196,18 @@ public class GameManager : MonoBehaviour {
     public void restartGameOnClick()
     {
         audioManager.playSound("click");
+
+        pauseRestartButton.SetActive(false);
+        pauseGame();
         fadeOut();
         Invoke("restartGame", 4.0f);
     }
 
     private void restartGame()
     {
+        GameStatistics.createEndgameStatistics();
+        GameStatistics.resetStats();
+
         reSpawnOgre(false);
         spawnTiger(false);
         DestroyImmediate(GameObject.Find("CatOwner"));
@@ -202,7 +216,7 @@ public class GameManager : MonoBehaviour {
 
         menu.SetActive(true);
         restartButton.SetActive(false);
-
+        
         GameObject player = GameObject.Find("Player");
         player.GetComponent<VRPlayerController>().CanMove = false;
         player.transform.position = playerStartSpawn.position;
@@ -220,9 +234,17 @@ public class GameManager : MonoBehaviour {
     public void pauseGame()
     {
         if (paused)
+        {
             Time.timeScale = 1;
+            pauseRestartButton.SetActive(false);
+            paused = false;
+        }
         else
+        {
             Time.timeScale = 0;
+            pauseRestartButton.SetActive(true);
+            paused = true;
+        }
     }
 
     private void fadeIn()
@@ -238,6 +260,11 @@ public class GameManager : MonoBehaviour {
     public void recieveAttention(int attention)
     {
         AdaptEDConnector.Attention = attention;
+    }
+
+    public void recieveMeditation(int meditation)
+    {
+        AdaptEDConnector.Meditation = meditation;
     }
 
 }
