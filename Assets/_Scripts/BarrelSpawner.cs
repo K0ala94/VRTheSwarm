@@ -17,10 +17,8 @@ public class BarrelSpawner : MonoBehaviour {
 
     void Update () {
 
-        if (GvrControllerInput.AppButtonDown)
-        {
-            Instantiate(barrelPrefab, barrelSpawn.position, Quaternion.identity);
-        }
+        int meditation = AdaptEDConnector.Meditation;
+        spawnTime = 40000 / (meditation * meditation);
     }
 
     public void startBarrelThrowing()

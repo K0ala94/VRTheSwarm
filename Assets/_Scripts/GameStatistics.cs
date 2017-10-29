@@ -49,7 +49,45 @@ public class GameStatistics {
 
     public void createEndgameStatistics()
     {
+        string avgFaultByRune;
+        float avgFault;
+        float avgAttentionAtFault = 0;
+        float avgMeditationAtFault = 0;
 
+        int waterFault = 0;
+        int fireFault = 0;
+        int natureFault = 0;
+        int voidFault = 0;
+
+        foreach(RuneFault f in faultData)
+        {
+            switch (f.Type)
+            {
+                case "Water":
+                    waterFault++;
+                    break;
+                case "Fire":
+                    fireFault++;
+                    break;
+                case "Void":
+                    voidFault++;
+                    break;
+                case "Nature":
+                    natureFault++;
+                    break;
+            }
+
+            avgAttentionAtFault += f.Attention;
+            avgMeditationAtFault += f.Meditation;
+        }
+
+        avgMeditationAtFault /= faultData.Count;
+        avgAttentionAtFault /= faultData.Count;
+        avgFault = faultData.Count / (Water + Fire + Nature + Void);
+        avgFaultByRune = "Water: " + waterFault/Water + 
+                         "; Fire: " + fireFault/Fire  +
+                         "; Void: " + voidFault / Void +
+                         "; Nature: " + natureFault / Nature ;
     }
 
 

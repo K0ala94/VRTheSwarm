@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
     public Transform respawnPoint;
     public Transform playerStartSpawn;
     private AudioManager audioManager;
+    private bool paused = false;
 
     public bool godMode;
     public bool PracticeRunesDone { get; set; }
@@ -51,6 +52,14 @@ public class GameManager : MonoBehaviour {
         OgreAlive = true;
         Phase1 = false;
         Phase2 = false;
+    }
+
+    private void Update()
+    {
+        if (GvrControllerInput.AppButtonDown)
+        {
+            pauseGame();
+        }
     }
 
     public void startGame()
@@ -208,9 +217,12 @@ public class GameManager : MonoBehaviour {
         fadeIn();
     }
 
-    public void recieveAttention(int attention)
+    public void pauseGame()
     {
-        AdaptEDConnector.Attention = attention;
+        if (paused)
+            Time.timeScale = 1;
+        else
+            Time.timeScale = 0;
     }
 
     private void fadeIn()
@@ -221,6 +233,11 @@ public class GameManager : MonoBehaviour {
     private void fadeOut()
     {
         GameObject.Find("FadePanel").GetComponent<Image>().CrossFadeAlpha(1.0f, 4.0f, true);
+    }
+
+    public void recieveAttention(int attention)
+    {
+        AdaptEDConnector.Attention = attention;
     }
 
 }
