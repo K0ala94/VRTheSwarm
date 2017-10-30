@@ -239,11 +239,12 @@ public class GameManager : MonoBehaviour {
         {
             Time.timeScale = 0;
             pauseRestartButton.transform.position = GameObject.Find("RestartButtonLocation").transform.position;
-            pauseRestartButton.GetComponent<DialogeController>().redirect();
+            pauseRestartButton.GetComponent<DialogeController>().redirect(); 
             pauseRestartButton.SetActive(true);
             paused = true;
         }
     }
+
 
     private void fadeIn()
     {
@@ -253,16 +254,6 @@ public class GameManager : MonoBehaviour {
     private void fadeOut()
     {
         GameObject.Find("FadePanel").GetComponent<Image>().CrossFadeAlpha(1.0f, 4.0f, true);
-    }
-
-    public void recieveAttention(int attention)
-    {
-        AdaptEDConnector.Attention = attention;
-    }
-
-    public void recieveMeditation(int meditation)
-    {
-        AdaptEDConnector.Meditation = meditation;
     }
 
 }
