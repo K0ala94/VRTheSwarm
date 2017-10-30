@@ -14,6 +14,12 @@ public class DialogeController : MonoBehaviour {
         transform.Rotate(new Vector3(0, 180, 0));
     }
 
+    public void redirect()
+    {
+        transform.LookAt(player.transform);
+        transform.Rotate(new Vector3(0, 180, 0));
+    }
+
     public void setDialogeText(string text)
     {
         Text dialogeText =GameObject.Find("DialogeText").GetComponent<Text>();

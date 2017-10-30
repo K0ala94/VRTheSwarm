@@ -160,11 +160,7 @@ public class GameManager : MonoBehaviour {
         DestroyImmediate(GameObject.Find("Player"));
         Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity).name = "Player";
 
-        //reset the reference to the restart button
-        pauseRestartButton = GameObject.Find("PauseRestartButton");
-        pauseRestartButton.SetActive(false);
-
-
+        pauseRestartButton.GetComponent<DialogeController>().player = GameObject.Find("Player");
         spawnTiger(true);
 
         GameObject.Find("Player").GetComponent<Transform>().Rotate(0,50,0);
@@ -197,8 +193,8 @@ public class GameManager : MonoBehaviour {
     {
         audioManager.playSound("click");
 
-        pauseRestartButton.SetActive(false);
-        pauseGame();
+        if(paused)
+            pauseGame();
         fadeOut();
         Invoke("restartGame", 4.0f);
     }
@@ -242,6 +238,8 @@ public class GameManager : MonoBehaviour {
         else
         {
             Time.timeScale = 0;
+            pauseRestartButton.transform.position = GameObject.Find("RestartButtonLocation").transform.position;
+            pauseRestartButton.GetComponent<DialogeController>().redirect();
             pauseRestartButton.SetActive(true);
             paused = true;
         }
