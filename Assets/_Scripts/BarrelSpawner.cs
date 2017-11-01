@@ -39,7 +39,7 @@ public class BarrelSpawner : MonoBehaviour {
         while (gameManager.OgreAlive && ( gameManager.Phase1 || gameManager.Phase2))
         {
             GameObject barrel = Instantiate(barrelPrefab, barrelSpawn.position, Quaternion.identity);
-            Destroy(barrel, 4.0f);
+            Destroy(barrel, 3.0f);
 
             FindObjectOfType<AudioManager>().playSound("barrelthrow");
 

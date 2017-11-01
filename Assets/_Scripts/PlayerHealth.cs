@@ -18,7 +18,7 @@ public class PlayerHealth : MonoBehaviour {
     {
         Image damageFilter = GameObject.Find("DamageFilterImg").GetComponent<Image>();
         Color dmgFilterColor = damageFilter.color;
-        dmgFilterColor.a = 1.0f;
+        dmgFilterColor.a = 0.5f;
         damageFilter.color = dmgFilterColor;
         damageFilter.CrossFadeAlpha(1.0f, 0.01f, true);
 
@@ -39,7 +39,7 @@ public class PlayerHealth : MonoBehaviour {
         }
         else
         {
-            damageFilter.CrossFadeAlpha(0f, 2.0f, true);
+            damageFilter.CrossFadeAlpha(0f, 1.5f, true);
         }
         
     }

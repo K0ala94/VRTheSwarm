@@ -54,11 +54,11 @@ public class GameStatistics {
         float avgAttentionAtFault = 0;
         float avgMeditationAtFault = 0;
 
-        int runeCount = 0;
-        int waterFault = 0;
-        int fireFault = 0;
-        int natureFault = 0;
-        int voidFault = 0;
+        float runeCount = 0;
+        float waterFault = 0;
+        float fireFault = 0;
+        float natureFault = 0;
+        float voidFault = 0;
 
         foreach(RuneFault f in faultData)
         {
@@ -87,9 +87,9 @@ public class GameStatistics {
         avgAttentionAtFault = faultData.Count == 0 ? 0 : (avgAttentionAtFault /faultData.Count);
         avgFault = faultData.Count == 0 ? 0 : (faultData.Count / runeCount);
         avgFaultByRune = "Water: " +  (Water == 0 ? 0 : (waterFault/Water)) + 
-                         "; Fire: " + (Fire == 0 ? 0 : (fireFault / Fire)) +
-                         "; Void: " + (Void == 0 ? 0 : (voidFault / Void)) +
-                         "; Nature: " + (Nature == 0 ? 0 : (natureFault / Nature));
+                         " ; Fire: " + (Fire == 0 ? 0 : (fireFault / Fire)) +
+                         " ; Void: " + (Void == 0 ? 0 : (voidFault / Void)) +
+                         " ; Nature: " + (Nature == 0 ? 0 : (natureFault / Nature));
 
         AdaptEDConnector.sendEndgameStatistics(avgFaultByRune, avgFault, 0, avgAttentionAtFault, avgMeditationAtFault);
     }
