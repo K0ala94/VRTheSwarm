@@ -52,14 +52,18 @@ public class AdaptEDConnector: MonoBehaviour {
         }
     }
 
-    public void recieveAttention(int attention)
+    public void recieveAttention(string attention)
     {
-        AdaptEDConnector.Attention = attention;
+        int value;
+        int.TryParse(attention, out value);
+        AdaptEDConnector.Attention = value ;
     }
 
-    public void recieveMeditation(int meditation)
+    public void recieveMeditation(string meditation)
     {
-        AdaptEDConnector.Meditation = meditation;
+        int value;
+        int.TryParse(meditation, out value);
+        AdaptEDConnector.Meditation = value;
     }
 
     public void recieveSensorStatusInfo(string status)

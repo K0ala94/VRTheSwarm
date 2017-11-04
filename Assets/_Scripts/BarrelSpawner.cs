@@ -21,6 +21,8 @@ public class BarrelSpawner : MonoBehaviour {
         if (meditation != 0)
         {
             spawnTime = 40000 / (meditation * meditation);
+            if (spawnTime > 18)
+                spawnTime = 18;
         }
         else
         {

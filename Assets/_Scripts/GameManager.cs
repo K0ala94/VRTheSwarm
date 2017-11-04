@@ -204,6 +204,8 @@ public class GameManager : MonoBehaviour {
         GameStatistics.createEndgameStatistics();
         GameStatistics.resetStats();
 
+        audioManager.stopSound("fightMusic");
+
         reSpawnOgre(false);
         spawnTiger(false);
         DestroyImmediate(GameObject.Find("CatOwner"));
