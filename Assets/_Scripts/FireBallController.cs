@@ -35,7 +35,7 @@ public class FireBallController : MonoBehaviour {
                 swingStartTime = Time.time;
                 swinging = true;
             }
-            else if (Time.time - swingStartTime > 0.15f)
+            else if (Time.time - swingStartTime > 0.22f)
             {
                 shoot();
             }
@@ -44,8 +44,6 @@ public class FireBallController : MonoBehaviour {
         {
             swinging = false;
         }
-
-
     }
 
     public void shoot()

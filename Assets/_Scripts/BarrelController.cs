@@ -6,7 +6,7 @@ public class BarrelController : MonoBehaviour {
 
     private Rigidbody rb;
     private GameManager gameManager;
-    public int damage = 34;
+    public int damage = 20;
 	void Start () {
         rb = GetComponent<Rigidbody>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();

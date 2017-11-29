@@ -194,7 +194,7 @@ public class WizzardController : MonoBehaviour {
 
     public void grunt()
     {
-        audioManager.playSound("grunt");
+        audioManager.playSoundWithDelay("grunt", 0.8f);
     }
 
     private IEnumerator enrage()

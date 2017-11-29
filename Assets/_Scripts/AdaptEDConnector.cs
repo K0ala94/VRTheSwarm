@@ -68,12 +68,12 @@ public class AdaptEDConnector: MonoBehaviour {
 
     public void recieveSensorStatusInfo(string status)
     {
-       if(BAD_SIGNAL.Equals(status) || OFFLINE.Equals(status) || UNRESPONSIVE.Equals(status))
+       if(/*BAD_SIGNAL.Equals(status) || OFFLINE.Equals(status) ||*/ UNRESPONSIVE.Equals(status))
         {
-            Time.timeScale = 0;
+            /*Time.timeScale = 0;
             
             sensorInfo.transform.position = GameObject.Find("RestartButtonLocation").transform.position;
-            sensorInfo.SetActive(true);
+            sensorInfo.SetActive(true);*/
         }
        else if (ONLINE.Equals(status))
         {

@@ -28,7 +28,7 @@ public class VRPlayerController : MonoBehaviour {
 	
 	void Update () {
         //mikor kezdodjon a mozgas
-        if (GvrControllerInput. IsTouching)
+        if (GvrControllerInput.IsTouching)
         {
             if (vrCamera.eulerAngles.x > 20 && vrCamera.eulerAngles.x < 50)
             {

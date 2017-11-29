@@ -33,6 +33,16 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
+    public void playSoundWithDelay(string name,float secs)
+    {
+        Sound sound = Array.Find(sounds, s => s.name.Equals(name));
+        if (sound != null)
+        {
+            ulong delay = (ulong)(secs * 44100);
+            sound.source.Play( delay);
+        }
+    }
+
     public void stopSound(string name)
     {
         Sound sound = Array.Find(sounds, s => s.name.Equals(name));

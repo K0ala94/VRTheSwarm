@@ -135,7 +135,7 @@ public class KittenController : MonoBehaviour {
         MathUtil.getTangentsFromPoint(self2d, obstacle2d, avoidRadius, out tangent1, out tangent2);
         Vector2 chosenTangent = MathUtil.pickCloserTangent(tangent1, tangent2, self2d, player2d, nest2d,false);
 
-        // ha a ket erinto tul kozel van egymashoz oda vissza valtogat a cica ezt keruli ez el
+        // ha a ket erinto tul kozel van egymashoz oda vissza valtogat a cica
         
         return  new Vector3(chosenTangent.x, transform.position.y, chosenTangent.y);
         
